@@ -1,5 +1,9 @@
 package com.codepath.apps.restclienttemplate;
 
+import com.codepath.apps.restclienttemplate.dagger.AppModule;
+import com.codepath.apps.restclienttemplate.dagger.DaggerNetComponent;
+import com.codepath.apps.restclienttemplate.dagger.NetComponent;
+import com.codepath.apps.restclienttemplate.dagger.NetModule;
 import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
@@ -20,6 +24,8 @@ import android.content.Context;
 public class RestApplication extends Application {
 	private static Context context;
 
+    private NetComponent netComponent;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -29,9 +35,17 @@ public class RestApplication extends Application {
 
 		RestApplication.context = this;
 
-
 		Stetho.initializeWithDefaults(this);
+
+        netComponent = DaggerNetComponent.builder()
+                .appModule(new AppModule(this))
+                .netModule(new NetModule())
+                .build();
 	}
+
+    public NetComponent getNetComponent() {
+        return netComponent;
+    }
 
 	public static TwitterClient getRestClient() {
 		return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, RestApplication.context);

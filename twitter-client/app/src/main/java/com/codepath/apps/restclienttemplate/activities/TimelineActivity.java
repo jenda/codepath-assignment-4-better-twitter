@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.RestApplication;
+import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.codepath.apps.restclienttemplate.adapters.TweetAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -18,6 +21,8 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,10 +39,16 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets = new ArrayList<>();
     TweetAdapter tweetAdapter = new TweetAdapter(tweets);
 
+    @Inject
+    TwitterClient twitterClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        ((RestApplication) getApplication()).getNetComponent().inject(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,9 +67,9 @@ public class TimelineActivity extends AppCompatActivity {
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
 
-        TwitterClient client = RestApplication.getRestClient();
+//        TwitterClient client = RestApplication.getRestClient();
 //        client.
-        client.getHomeTimeline(1, new JsonHttpResponseHandler() {
+        twitterClient.getHomeTimeline(1, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
                 // Load json array into model classes

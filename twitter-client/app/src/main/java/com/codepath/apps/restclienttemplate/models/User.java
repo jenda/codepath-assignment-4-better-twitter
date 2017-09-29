@@ -24,11 +24,7 @@ public class User {
     String id_str;
 
     public static User parseUser(JSONObject jsonObject) throws JSONException {
-
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(jsonObject.toString(), User.class);
-//        User user = new User();
-//        user.name = jsonObject.getString("name");
-//        return user;
     }
 }
