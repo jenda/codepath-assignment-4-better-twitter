@@ -6,6 +6,7 @@
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">codepathtweets</string>
     <string name="title_activity_timeline">TimelineActivity</string>
+    <string name="share">Share</string>
 
 
 </resources>

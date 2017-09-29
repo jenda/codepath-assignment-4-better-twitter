@@ -1,10 +1,14 @@
 package com.codepath.apps.bluebirdone.activities;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
@@ -25,17 +29,18 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends BaseBlueBirdOneActivity {
 
+    @Inject
+    TwitterClient twitterClient;
+    @Inject
+    ModelSerializer modelSerializer;
+
     @BindView(R.id.tweets_recycler_view)
     RecyclerView tweetsRecyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     List<Tweet> tweets = new ArrayList<>();
     TweetAdapter tweetAdapter = new TweetAdapter(tweets);
-
-    @Inject
-    TwitterClient twitterClient;
-
-    @Inject
-    ModelSerializer modelSerializer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 
         getNetComponent().inject(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setUpToolbar();
 
 //        ButterKnife.bind(this);
 
@@ -74,6 +78,24 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 
             }
         });
+    }
+
+    private void setUpToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.timeline, menu);
+
+        return true;
     }
 
 }
