@@ -1,6 +1,9 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import com.codepath.apps.restclienttemplate.MyDatabase;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Table;
 
 import org.json.JSONArray;
@@ -25,28 +28,30 @@ public class Tweet /* extends BaseModel */{
     @Column
     public Long id;
     @Column
+    @SerializedName("user")
     public User user;
     @Column
     public String userHandle;
     @Column
     public String timestamp;
     @Column
+    @SerializedName("text")
     public String text;
 
     public Tweet() {}
 
-    public Tweet(JSONObject object){
-        super();
-
-        try {
-            this.user = User.parseUser(object.getJSONObject("user"));
-//            this.userHandle = object.getString("user_username");
-//            this.timestamp = object.getString("timestamp");
-            this.text = object.getString("text");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    public Tweet(JSONObject object){
+//        super();
+//
+////        try {
+////            this.user = User.parseUser(object.getJSONObject("user"));
+//////            this.userHandle = object.getString("user_username");
+//////            this.timestamp = object.getString("timestamp");
+////            this.text = object.getString("text");
+////        } catch (JSONException e) {
+////            e.printStackTrace();
+////        }
+//    }
 
     public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
@@ -60,7 +65,8 @@ public class Tweet /* extends BaseModel */{
                 continue;
             }
 
-            Tweet tweet = new Tweet(tweetJson);
+            Gson gson = new GsonBuilder().create();
+            Tweet tweet = gson.fromJson(tweetJson.toString(), Tweet.class);
 //            tweet.save();
             tweets.add(tweet);
         }
