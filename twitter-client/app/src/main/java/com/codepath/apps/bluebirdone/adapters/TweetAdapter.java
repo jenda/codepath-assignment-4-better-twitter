@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.adapters;
+package com.codepath.apps.bluebirdone.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.bluebirdone.R;
+import com.codepath.apps.bluebirdone.models.Tweet;
 
 import java.util.List;
 

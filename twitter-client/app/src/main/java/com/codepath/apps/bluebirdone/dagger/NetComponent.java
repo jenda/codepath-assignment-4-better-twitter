@@ -1,6 +1,6 @@
-package com.codepath.apps.restclienttemplate.dagger;
+package com.codepath.apps.bluebirdone.dagger;
 
-import com.codepath.apps.restclienttemplate.activities.TimelineActivity;
+import com.codepath.apps.bluebirdone.activities.TimelineActivity;
 
 import javax.inject.Singleton;
 

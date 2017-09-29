@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.dagger;
+package com.codepath.apps.bluebirdone.dagger;
 
 import android.app.Application;
 

@@ -1,6 +1,6 @@
-package com.codepath.apps.restclienttemplate.models;
+package com.codepath.apps.bluebirdone.models;
 
-import com.codepath.apps.restclienttemplate.MyDatabase;
+import com.codepath.apps.bluebirdone.MyDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;

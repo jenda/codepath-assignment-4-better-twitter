@@ -1,11 +1,10 @@
-package com.codepath.apps.restclienttemplate.dagger;
+package com.codepath.apps.bluebirdone.dagger;
 
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.codepath.apps.restclienttemplate.RestApplication;
-import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.bluebirdone.TwitterClient;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

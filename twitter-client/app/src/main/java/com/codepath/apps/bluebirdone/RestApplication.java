@@ -1,9 +1,9 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.bluebirdone;
 
-import com.codepath.apps.restclienttemplate.dagger.AppModule;
-import com.codepath.apps.restclienttemplate.dagger.DaggerNetComponent;
-import com.codepath.apps.restclienttemplate.dagger.NetComponent;
-import com.codepath.apps.restclienttemplate.dagger.NetModule;
+import com.codepath.apps.bluebirdone.dagger.AppModule;
+import com.codepath.apps.bluebirdone.dagger.DaggerNetComponent;
+import com.codepath.apps.bluebirdone.dagger.NetComponent;
+import com.codepath.apps.bluebirdone.dagger.NetModule;
 import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;

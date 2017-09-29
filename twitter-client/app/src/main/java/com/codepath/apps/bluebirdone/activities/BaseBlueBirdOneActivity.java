@@ -1,11 +1,11 @@
-package com.codepath.apps.restclienttemplate.activities;
+package com.codepath.apps.bluebirdone.activities;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
-import com.codepath.apps.restclienttemplate.RestApplication;
-import com.codepath.apps.restclienttemplate.dagger.NetComponent;
+import com.codepath.apps.bluebirdone.RestApplication;
+import com.codepath.apps.bluebirdone.dagger.NetComponent;
 
 import butterknife.ButterKnife;
 
