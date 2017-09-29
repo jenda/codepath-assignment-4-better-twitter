@@ -14,12 +14,15 @@ import org.json.JSONObject;
 
 //@Table(database = MyDatabase.class)
 public class User {
-    @Column
 
     @SerializedName("name")
     public String name;
-    @Column
-    String id_str;
+
+    @SerializedName("screen_name")
+    public String screenName;
+
+    @SerializedName("id_str")
+    public String stringId;
 
     public static User parseUser(JSONObject jsonObject) throws JSONException {
         Gson gson = new GsonBuilder().create();
