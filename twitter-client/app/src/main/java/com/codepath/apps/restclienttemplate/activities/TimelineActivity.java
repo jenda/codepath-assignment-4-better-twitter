@@ -31,7 +31,7 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.codepath.apps.restclienttemplate.models.Tweet.fromJson;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends BaseBlueBirdOneActivity {
 
     @BindView(R.id.tweets_recycler_view)
     RecyclerView tweetsRecyclerView;
@@ -47,12 +47,12 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        ((RestApplication) getApplication()).getNetComponent().inject(this);
+        getNetComponent().inject(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -80,21 +80,5 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
     }
-
-//    @OnClick(R.id.fab)
-//    protected void getTweets() {
-//
-//        TwitterClient client = RestApplication.getRestClient();
-//        client.getHomeTimeline(1, new JsonHttpResponseHandler() {
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-//                Log.d("DEBUG", "timeline: " + jsonArray.toString());
-//                // Load json array into model classes
-////                tweets.clear();
-////                tweets.addAll(Tweet.fromJson(jsonArray));
-////                tweetAdapter.notifyDataSetChanged();
-//
-//            }
-//        });
-//    }
 
 }
