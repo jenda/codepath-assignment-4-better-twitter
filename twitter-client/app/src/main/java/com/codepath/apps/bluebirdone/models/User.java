@@ -18,6 +18,9 @@ public class User {
     @SerializedName("name")
     public String name;
 
+    /**
+     * Handle
+     */
     @SerializedName("screen_name")
     public String screenName;
 
@@ -27,5 +30,9 @@ public class User {
     public static User parseUser(JSONObject jsonObject) throws JSONException {
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(jsonObject.toString(), User.class);
+    }
+
+    public String getHandle() {
+        return "@" + screenName;
     }
 }

@@ -34,6 +34,9 @@ public class Tweet /* extends BaseModel */{
     @SerializedName("text")
     public String text;
 
+    @SerializedName("created_at")
+    public String createdAt;
+
     public Tweet() {}
 
 //    public Tweet(JSONObject object){

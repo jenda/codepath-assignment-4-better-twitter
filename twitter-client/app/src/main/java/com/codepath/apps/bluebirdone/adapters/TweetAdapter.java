@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.utils.Utils;
 
 import java.util.List;
 
@@ -44,7 +45,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = tweets.get(position);
 
         holder.tweetTextTextView.setText(tweet.text);
-        holder.userHandleTextView.setText(tweet.user.name);
+        holder.timeAgoTextView.setText(Utils.getRelativeTimeAgo(tweet.createdAt));
+
+        holder.userNameTextView.setText(tweet.user.name);
+        holder.handleTextView.setText(tweet.user.getHandle());
     }
 
     @Override
@@ -61,7 +65,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         TextView tweetTextTextView;
 
         @BindView(R.id.user_name_text_view)
-        TextView userHandleTextView;
+        TextView userNameTextView;
+
+        @BindView(R.id.handle_text_view)
+        TextView handleTextView;
+
+        @BindView(R.id.time_ago_text_view)
+        TextView timeAgoTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);

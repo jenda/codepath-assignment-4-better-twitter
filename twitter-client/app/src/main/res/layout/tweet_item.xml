@@ -1,19 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/tweet_outer_layout_margin">
 
-    <TextView
-        android:id="@+id/user_name_text_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/user_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:textSize="@dimen/user_name_text_size"
+            tools:text="Wall Street Journal" />
+
+        <TextView
+            android:id="@+id/handle_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/handle_left_margin"
+            android:layout_toRightOf="@+id/user_name_text_view"
+            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+            android:textSize="@dimen/handle_text_size"
+            tools:text="\@wsj" />
+
+        <TextView
+            android:id="@+id/time_ago_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/time_ago_text_size"
+            tools:text="9h ago" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tweet_text_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="TextView" />
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/footer" >
+    </RelativeLayout>
 </LinearLayout>
