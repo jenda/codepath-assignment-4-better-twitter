@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -27,6 +28,9 @@ public class RestApplication extends Application {
 		FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 
 		RestApplication.context = this;
+
+
+		Stetho.initializeWithDefaults(this);
 	}
 
 	public static TwitterClient getRestClient() {

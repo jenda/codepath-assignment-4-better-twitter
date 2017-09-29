@@ -7,6 +7,7 @@ import com.github.scribejava.apis.FlickrApi;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 
 
@@ -61,7 +62,7 @@ public class TwitterClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
 		params.put("page", String.valueOf(page));
-		getClient().get(apiUrl, params, handler);
+		RequestHandle requestHandle = getClient().get(apiUrl, params, handler);
 	}
 
     // TwitterClient.java
@@ -74,7 +75,7 @@ public class TwitterClient extends OAuthBaseClient {
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
+	 * 2. Define the parameters to pass to the request (query or text)
 	 *    i.e RequestParams params = new RequestParams("foo", "bar");
 	 * 3. Define the request method and make a call to the client
 	 *    i.e client.get(apiUrl, params, handler);

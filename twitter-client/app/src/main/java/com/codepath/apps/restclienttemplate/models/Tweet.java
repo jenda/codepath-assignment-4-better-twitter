@@ -9,9 +9,7 @@ import org.json.JSONObject;
 
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
 
 import java.util.ArrayList;
 
@@ -20,20 +18,20 @@ import java.util.ArrayList;
  * Created by jan_spidlen on 9/27/17.
  */
 
-@Table(database = MyDatabase.class)
-public class Tweet extends BaseModel {
+//@Table(database = MyDatabase.class)
+public class Tweet /* extends BaseModel */{
     // Define database columns and associated fields
     @PrimaryKey
     @Column
-    Long id;
+    public Long id;
     @Column
-    String userId;
+    public User user;
     @Column
-    String userHandle;
+    public String userHandle;
     @Column
-    String timestamp;
+    public String timestamp;
     @Column
-    String body;
+    public String text;
 
     public Tweet() {}
 
@@ -41,10 +39,10 @@ public class Tweet extends BaseModel {
         super();
 
         try {
-            this.userId = object.getString("user_id");
-            this.userHandle = object.getString("user_username");
-            this.timestamp = object.getString("timestamp");
-            this.body = object.getString("body");
+            this.user = User.parseUser(object.getJSONObject("user"));
+//            this.userHandle = object.getString("user_username");
+//            this.timestamp = object.getString("timestamp");
+            this.text = object.getString("text");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,7 +61,7 @@ public class Tweet extends BaseModel {
             }
 
             Tweet tweet = new Tweet(tweetJson);
-            tweet.save();
+//            tweet.save();
             tweets.add(tweet);
         }
 

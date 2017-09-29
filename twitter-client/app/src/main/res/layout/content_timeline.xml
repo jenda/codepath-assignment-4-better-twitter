@@ -8,11 +8,10 @@
     tools:context="com.codepath.apps.restclienttemplate.TimelineActivity"
     tools:showIn="@layout/activity_timeline">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="167dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tweets_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.constraint.ConstraintLayout>
