@@ -58,7 +58,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
 
-//        TwitterClient client = RestApplication.getRestClient();
+//        TwitterClient client = BlueBirdOneApplication.getRestClient();
 //        client.
         twitterClient.getHomeTimeline(1, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {

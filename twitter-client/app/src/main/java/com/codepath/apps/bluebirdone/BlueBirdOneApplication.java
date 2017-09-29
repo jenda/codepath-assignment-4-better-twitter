@@ -17,11 +17,11 @@ import android.content.Context;
  * including the image cache in memory and on disk. This also adds a singleton
  * for accessing the relevant rest client.
  *
- *     TwitterClient client = RestApplication.getRestClient();
+ *     TwitterClient client = BlueBirdOneApplication.getRestClient();
  *     // use client to send requests to API
  *
  */
-public class RestApplication extends Application {
+public class BlueBirdOneApplication extends Application {
 	private static Context context;
 
     private NetComponent netComponent;
@@ -33,7 +33,7 @@ public class RestApplication extends Application {
 		FlowManager.init(new FlowConfig.Builder(this).build());
 		FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 
-		RestApplication.context = this;
+		BlueBirdOneApplication.context = this;
 
 		Stetho.initializeWithDefaults(this);
 
@@ -48,6 +48,6 @@ public class RestApplication extends Application {
     }
 
 	public static TwitterClient getRestClient() {
-		return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, RestApplication.context);
+		return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, BlueBirdOneApplication.context);
 	}
 }
