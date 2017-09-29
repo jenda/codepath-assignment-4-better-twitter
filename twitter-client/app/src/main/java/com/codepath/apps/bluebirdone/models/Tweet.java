@@ -49,6 +49,10 @@ public class Tweet /* extends BaseModel */{
 ////        }
 //    }
 
+    public static Tweet fromJson(JSONObject jsonObject, Gson gson) {
+        return gson.fromJson(jsonObject.toString(), Tweet.class);
+    }
+
     public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
 

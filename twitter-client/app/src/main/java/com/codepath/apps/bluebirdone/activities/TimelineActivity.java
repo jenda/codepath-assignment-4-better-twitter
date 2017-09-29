@@ -9,6 +9,7 @@ import android.util.Log;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
+import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -32,6 +33,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 
     @Inject
     TwitterClient twitterClient;
+
+    @Inject
+    ModelSerializer modelSerializer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
                 // Load json array into model classes
                 tweets.clear();
-                tweets.addAll(Tweet.fromJson(jsonArray));
+                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
                 tweetAdapter.notifyDataSetChanged();
 
             }

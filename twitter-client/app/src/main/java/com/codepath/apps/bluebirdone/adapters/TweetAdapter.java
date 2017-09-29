@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 /**
  * Created by jan_spidlen on 9/28/17.
  */
-
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
     private final List<Tweet> tweets;
@@ -53,7 +52,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return tweets.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Viewholder class for the tweets.
+     */
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tweet_text_text_view)
         TextView tweetTextTextView;
