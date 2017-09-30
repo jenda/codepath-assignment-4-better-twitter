@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,12 +19,16 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 
 import static com.codepath.apps.bluebirdone.R.integer.tweet_length;
 
@@ -47,9 +52,12 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     @BindView(R.id.user_profile_image)
     ImageView currentUserImageView;
 
+    @BindView(R.id.post_tweet_button)
+    ImageButton postTweetImageButton;
+
     @Inject
     TwitterClient twitterClient;
-//    @Inject
+
     public CurrentUser currentUser;
 
     @Inject
@@ -68,6 +76,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
         userHandleTextView.setText(currentUser.getHandle());
         updateReamingCharsCount(getResources().getInteger(R.integer.tweet_length));
         setupTweetEditText();
+        maybeEnablePostTweetButton();
 
         Glide.with(this)
                 .load(currentUser.profileImageUrl)
@@ -104,6 +113,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
             public void afterTextChanged(Editable s) {
                 updateReamingCharsCount(
                         getResources().getInteger(R.integer.tweet_length) - s.length());
+                maybeEnablePostTweetButton();
             }
         });
     }
@@ -111,6 +121,26 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     private void updateReamingCharsCount(int remainingChars) {
         reamingCharsCountTextView.setText(remainingChars + " chars remaining");
 
+    }
+
+    private void maybeEnablePostTweetButton() {
+        postTweetImageButton.setEnabled(tweetTextEditText.getText().length() != 0);
+    }
+
+    @OnClick(R.id.post_tweet_button)
+    protected void postTweet() {
+        Log.d("jenda", "post tweet");
+
+        String tweet = tweetTextEditText.getText().toString();
+
+        twitterClient.postTweet(tweet, new JsonHttpResponseHandler() {
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+                Log.d("jenda", errorResponse.toString());
+                Log.d("jenda", "statusCode: " + statusCode);
+            }
+        });
     }
 
     @OnClick(R.id.close_dialog)
