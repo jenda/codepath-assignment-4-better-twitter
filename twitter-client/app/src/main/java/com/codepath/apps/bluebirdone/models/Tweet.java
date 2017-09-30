@@ -26,11 +26,7 @@ public class Tweet /* extends BaseModel */{
     @Column
     @SerializedName("user")
     public User user;
-    @Column
-    public String userHandle;
-    @Column
-    public String timestamp;
-    @Column
+
     @SerializedName("text")
     public String text;
 

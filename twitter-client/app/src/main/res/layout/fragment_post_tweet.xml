@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/user_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/close_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/verified_blue"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/user_profile_image">
+            <TextView
+                android:id="@+id/user_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Jan Spidlen" />
+            <TextView
+                android:id="@+id/user_handle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="\@janspidlen" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/user_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:src="@drawable/ic_launcher"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/tweet_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:lines="10"
+        android:inputType="textMultiLine"
+        android:layout_below="@id/user_details_layout"
+        tools:text="Tweet like there is no tomorrow" />
+
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/remaining_text_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/post_tweet_button"
+            android:layout_centerVertical="true"
+            tools:text="TextView" />
+
+
+        <ImageButton
+            android:id="@+id/post_tweet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@mipmap/ic_feather_compose" />
+    </RelativeLayout>
+
+
+    <!--<EditText-->
+        <!--android:id="@+id/editText2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="textMultiLine" />-->
+</RelativeLayout>

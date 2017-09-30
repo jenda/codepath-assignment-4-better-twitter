@@ -26,7 +26,7 @@ public abstract class BaseBlueBirdOneActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    protected NetComponent getNetComponent() {
+    public NetComponent getNetComponent() {
         return ((BlueBirdOneApplication) getApplication()).getNetComponent();
     }
 }

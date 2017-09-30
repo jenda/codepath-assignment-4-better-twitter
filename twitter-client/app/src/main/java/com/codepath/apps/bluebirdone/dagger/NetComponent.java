@@ -1,6 +1,7 @@
 package com.codepath.apps.bluebirdone.dagger;
 
 import com.codepath.apps.bluebirdone.activities.TimelineActivity;
+import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 
 import javax.inject.Singleton;
 
@@ -14,6 +15,5 @@ import dagger.Component;
 @Component(modules={AppModule.class, NetModule.class})
 public interface NetComponent {
     void inject(TimelineActivity activity);
-    // void inject(MyFragment fragment);
-    // void inject(MyService service);
+    void inject(PostTweetDialog postTweetDialog);
 }

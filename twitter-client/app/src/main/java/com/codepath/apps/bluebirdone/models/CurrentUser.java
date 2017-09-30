@@ -1,0 +1,31 @@
+package com.codepath.apps.bluebirdone.models;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * Created by jan_spidlen on 9/29/17.
+ */
+
+public class CurrentUser {
+
+    @SerializedName("name")
+    public String name;
+
+    @SerializedName("screen_name")
+    public String screen_name;
+
+    @SerializedName("profile_image_url")
+    public String profileImageUrl;
+
+
+
+    public static CurrentUser parseUser(JSONObject jsonObject) throws JSONException {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(jsonObject.toString(), CurrentUser.class);
+    }
+}
