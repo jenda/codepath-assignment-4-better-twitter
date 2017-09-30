@@ -4,5 +4,6 @@
     <color name="logo_blue">#00aced</color>
     <color name="verified_blue">#1dcaff</color>
     <color name="background_blue">#c0deed</color>
+    <color name="grayish_blue">#e3e7ea</color>
     <color name="white">#ffffff</color>
 </resources>

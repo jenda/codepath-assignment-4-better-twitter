@@ -40,7 +40,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     Toolbar toolbar;
 
     List<Tweet> tweets = new ArrayList<>();
-    TweetAdapter tweetAdapter = new TweetAdapter(tweets);
+    TweetAdapter tweetAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         setContentView(R.layout.activity_timeline);
 
         getNetComponent().inject(this);
+        tweetAdapter = new TweetAdapter(tweets, this);
 
         setUpToolbar();
-
-//        ButterKnife.bind(this);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {

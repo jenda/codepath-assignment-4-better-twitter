@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.utils.Utils;
@@ -22,9 +24,11 @@ import butterknife.ButterKnife;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
     private final List<Tweet> tweets;
+    private final Context context;
 
-    public TweetAdapter(List<Tweet> tweets) {
+    public TweetAdapter(List<Tweet> tweets, Context context) {
         this.tweets = tweets;
+        this.context = context;
     }
 
     @Override
@@ -49,6 +53,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         holder.userNameTextView.setText(tweet.user.name);
         holder.handleTextView.setText(tweet.user.getHandle());
+
+        Glide.with(context)
+                .load(tweet.user.profileImageUrl)
+//                .override(100,0)
+                .into(holder.profileImageView);
     }
 
     @Override
@@ -72,6 +81,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         @BindView(R.id.time_ago_text_view)
         TextView timeAgoTextView;
+
+        @BindView(R.id.profile_image_view)
+        ImageView profileImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
