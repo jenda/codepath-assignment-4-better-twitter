@@ -129,8 +129,6 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
 
     @OnClick(R.id.post_tweet_button)
     protected void postTweet() {
-        Log.d("jenda", "post tweet");
-
         String tweet = tweetTextEditText.getText().toString();
 
         twitterClient.postTweet(tweet, new JsonHttpResponseHandler() {

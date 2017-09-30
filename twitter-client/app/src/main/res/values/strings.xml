@@ -8,6 +8,7 @@
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="share">Share</string>
     <string name="post_tweet_placeholder">Tweet like there is no tomorrow...</string>
+    <string name="action_logout">Logout</string>
 
 
 </resources>

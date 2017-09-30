@@ -9,4 +9,9 @@
         android:title="@string/share"
         app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
 
+    <item
+        android:id="@+id/logout_menu"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
+        app:showAsAction="never" />
 </menu>

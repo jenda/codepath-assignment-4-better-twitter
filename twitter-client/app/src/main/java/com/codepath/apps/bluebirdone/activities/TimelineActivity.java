@@ -1,5 +1,6 @@
 package com.codepath.apps.bluebirdone.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -122,6 +123,20 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
                 throwable.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout_menu:
+                // Do whatever you want to do on logout click.
+                Log.d("jenda", "logout ");
+                twitterClient.clearAccessToken();
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
