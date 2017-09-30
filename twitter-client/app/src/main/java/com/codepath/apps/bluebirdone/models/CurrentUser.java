@@ -23,9 +23,11 @@ public class CurrentUser {
     public String profileImageUrl;
 
 
-
-    public static CurrentUser parseUser(JSONObject jsonObject) throws JSONException {
-        Gson gson = new GsonBuilder().create();
+    public static CurrentUser parseUser(JSONObject jsonObject, Gson gson) {
         return gson.fromJson(jsonObject.toString(), CurrentUser.class);
+    }
+
+    public String getHandle() {
+        return "@" + screen_name;
     }
 }

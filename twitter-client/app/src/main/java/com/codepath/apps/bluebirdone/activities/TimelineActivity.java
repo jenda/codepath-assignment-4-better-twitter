@@ -16,11 +16,13 @@ import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
+import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,9 +99,29 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     @OnClick(R.id.fab)
     protected void fabClicked() {
         Log.d("jenda", "fab clicked");
-        FragmentManager fm = getSupportFragmentManager();
+        final FragmentManager fm = getSupportFragmentManager();
 //        PostTweetDialog postTweetDialog = PostTweetDialog.newInstance("Some Title");
-        postTweetDialog.show(fm, PostTweetDialog.class.getName());
+//        postTweetDialog.show(fm, PostTweetDialog.class.getName());
+
+        if (postTweetDialog.currentUser != null) {
+            postTweetDialog.show(fm, PostTweetDialog.class.getName());
+            return;
+        }
+
+        twitterClient.getCurrentUser(new JsonHttpResponseHandler() {
+
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                Log.d("DEBUG", "timeline: " + jsonObject.toString());
+                // Load json array into model classes
+                CurrentUser currentUser = modelSerializer.currentUserFromJson(jsonObject);
+                postTweetDialog.currentUser = currentUser;
+                postTweetDialog.show(fm, PostTweetDialog.class.getName());
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+            }
+        });
     }
 
 }

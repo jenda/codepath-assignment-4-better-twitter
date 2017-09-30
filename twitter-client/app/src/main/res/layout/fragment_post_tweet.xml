@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toLeftOf="@+id/user_profile_image">
+
             <TextView
                 android:id="@+id/user_full_name"
                 android:layout_width="match_parent"
@@ -39,7 +40,7 @@
 
         <ImageView
             android:id="@+id/user_profile_image"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/profile_image_width"
             android:layout_height="wrap_content"
             tools:src="@drawable/ic_launcher"
             android:layout_alignParentRight="true"/>
@@ -63,7 +64,7 @@
         android:layout_alignParentBottom="true">
 
         <TextView
-            android:id="@+id/remaining_text_count"
+            android:id="@+id/remaining_chars_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/post_tweet_button"
@@ -76,7 +77,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            app:srcCompat="@mipmap/ic_feather_compose" />
+            app:srcCompat="@mipmap/ic_feather_compose"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="@color/transparent"
+            android:layout_margin="@dimen/post_tweet_button_margin"/>
     </RelativeLayout>
 
 

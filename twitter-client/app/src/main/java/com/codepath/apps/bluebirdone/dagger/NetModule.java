@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.codepath.apps.bluebirdone.TwitterClient;
+import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -61,4 +62,11 @@ public class NetModule {
     TwitterClient provideTwitterClient(Application application) {
         return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, application);
     }
+
+
+//    @Provides
+//    @Singleton
+//    CurrentUser provideCurrentUser(TwitterClient twitterClient) {
+//        return (CurrentUser) twitterClient.getHomeTimeline();
+//    }
 }

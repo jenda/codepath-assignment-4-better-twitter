@@ -56,7 +56,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
-//                .override(100,0)
                 .into(holder.profileImageView);
     }
 

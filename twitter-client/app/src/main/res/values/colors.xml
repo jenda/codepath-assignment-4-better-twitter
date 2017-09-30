@@ -6,4 +6,5 @@
     <color name="background_blue">#c0deed</color>
     <color name="grayish_blue">#e3e7ea</color>
     <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
 </resources>

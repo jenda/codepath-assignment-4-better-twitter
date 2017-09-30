@@ -39,4 +39,8 @@ public class ModelSerializer {
 
         return tweets;
     }
+
+    public CurrentUser currentUserFromJson(JSONObject jsonObject) {
+        return CurrentUser.parseUser(jsonObject, gson);
+    }
 }
