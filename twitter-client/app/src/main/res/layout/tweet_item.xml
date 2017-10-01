@@ -56,7 +56,17 @@
         android:layout_toRightOf="@+id/profile_image_view"
         android:layout_below="@+id/tweet_header_layout"
         android:layout_marginBottom="@dimen/tweet_text_margin_bottom"
+        android:autoLink="all"
+        android:linksClickable="true"
         tools:text="Watched this like 1,000,000 times it's still hilarious" />
+
+    <ImageView
+        android:id="@+id/mediaImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/profile_image_margin"
+        android:layout_below="@+id/tweet_text_text_view"
+        app:srcCompat="@drawable/ic_launcher" />
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

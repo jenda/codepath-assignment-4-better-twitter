@@ -54,6 +54,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.userNameTextView.setText(tweet.user.name);
         holder.handleTextView.setText(tweet.user.getHandle());
 
+        if (tweet.getPhoto() != null) {
+            Glide.with(context)
+                    .load(tweet.getPhoto().mediaUrlHttps)
+                    .into(holder.mediaImageView);
+            holder.mediaImageView.setVisibility(View.VISIBLE);
+        } else {
+            holder.mediaImageView.setVisibility(View.GONE);
+        }
+
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
                 .into(holder.profileImageView);
@@ -93,6 +102,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         @BindView(R.id.profile_image_view)
         ImageView profileImageView;
+
+        @BindView(R.id.mediaImageView)
+        ImageView mediaImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);

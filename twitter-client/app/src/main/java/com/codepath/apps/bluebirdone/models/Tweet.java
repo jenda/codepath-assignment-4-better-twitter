@@ -1,5 +1,7 @@
 package com.codepath.apps.bluebirdone.models;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -11,6 +13,7 @@ import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,20 +42,25 @@ public class Tweet /* extends BaseModel */{
     @SerializedName("favourites_count")
     public int favouritesCount;
 
+
+    @SerializedName("entities")
+    Entity entity;
+
     public Tweet() {}
 
-//    public Tweet(JSONObject object){
-//        super();
-//
-////        try {
-////            this.user = User.parseUser(object.getJSONObject("user"));
-//////            this.userHandle = object.getString("user_username");
-//////            this.timestamp = object.getString("timestamp");
-////            this.text = object.getString("text");
-////        } catch (JSONException e) {
-////            e.printStackTrace();
-////        }
-//    }
+
+    public Media getPhoto() {
+        if (entity != null && entity.media != null) {
+            Log.d("jenda", "media: " + entity.media.size());
+            for (Media m : entity.media) {
+                if (m.type.equals("photo")) {
+                    return m;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public static Tweet fromJson(JSONObject jsonObject, Gson gson) {
         return gson.fromJson(jsonObject.toString(), Tweet.class);
