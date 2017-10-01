@@ -87,7 +87,19 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         dataConnector.addOnApiFinishedListener(this);
         dataConnector.fetchTimeLine();
 
-        
+        tweetsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+                int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+                if (tweets.size() != 0
+                        && lastVisibleItemPosition != RecyclerView.NO_POSITION
+                        && lastVisibleItemPosition == tweets.size() - 3) {
+                    Log.d("jenda", "request more");
+                    dataConnector.fetchMore();
+                }
+            }
+        });
     }
 
     @Override

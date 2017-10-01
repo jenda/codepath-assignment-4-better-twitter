@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,9 +84,34 @@ public class DataConnector {
         });
     }
 
+    private boolean isFetching = false;
+    private Date lastFetched = null;
+    private boolean hasMore = true;
+    class Counter {
+        int page;
+    }
+//    private int page = 0;
+    private final Counter counter = new Counter();
+
+    public void fetchMore() {
+        fetchTimeLineInternal();
+    }
 
     public void fetchTimeLine() {
-        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
+        if (isFetching) {
+            return;
+        }
+        counter.page = 0;
+        fetchTimeLineInternal();
+    }
+    private void fetchTimeLineInternal() {
+        if (isFetching) {
+            return;
+        }
+        isFetching = true;
+
+        lastFetched = new Date();
+        twitterClient.getHomeTimeline(counter.page, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
 
@@ -101,10 +127,15 @@ public class DataConnector {
                     l.onTimeLineFetched(tweets);
                 }
 
+                hasMore = tweets.size() != 0;
+                counter.page++;
+                isFetching = false;
+
             }
             public void onFailure(int statusCode, Header[] headers,
                                   Throwable throwable, JSONObject errorResponse) {
                 notifyFailure(R.string.fetching_timeline_failed);
+                isFetching = false;
             }
         });
     }
