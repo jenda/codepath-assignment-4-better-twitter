@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,7 +55,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     ImageView currentUserImageView;
 
     @BindView(R.id.post_tweet_button)
-    ImageButton postTweetImageButton;
+    Button postTweetButton;
 
     @Inject
     TwitterClient twitterClient;
@@ -92,6 +93,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
 
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
     }
 
 
@@ -126,7 +128,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     }
 
     private void maybeEnablePostTweetButton() {
-        postTweetImageButton.setEnabled(tweetTextEditText.getText().length() != 0);
+        postTweetButton.setEnabled(tweetTextEditText.getText().length() != 0);
     }
 
     //////////////////////////

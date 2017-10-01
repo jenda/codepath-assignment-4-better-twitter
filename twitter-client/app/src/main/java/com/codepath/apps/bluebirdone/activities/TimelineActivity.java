@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
@@ -60,6 +61,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_timeline);
 
         getNetComponent().inject(this);
@@ -121,6 +123,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setTitle("");
     }
 
     private void setupSwipeRefreshContained() {

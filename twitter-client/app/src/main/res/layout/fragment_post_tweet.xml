@@ -63,9 +63,12 @@
         android:gravity="top"
         android:inputType="textMultiLine"
         android:hint="@string/post_tweet_placeholder"
-        android:layout_below="@id/user_details_layout"
         android:maxLength="@integer/tweet_length"
-        tools:text="Tweet like there is no tomorrow" />
+        tools:text="Tweet like there is no tomorrow"
+        android:layout_below="@+id/user_details_layout"
+        android:layout_alignParentStart="true"
+        android:padding="10dp"
+        android:background="@color/white"/>
 
 
     <RelativeLayout
@@ -74,6 +77,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/grayish_blue" />
         <TextView
             android:id="@+id/remaining_chars_count"
             android:layout_width="wrap_content"
@@ -83,14 +90,15 @@
             tools:text="TextView" />
 
 
-        <ImageButton
+        <Button
             android:id="@+id/post_tweet_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             app:srcCompat="@mipmap/ic_feather_compose"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:background="@color/transparent"
+            android:textColor="@color/white"
+            android:text="@string/tweet_button_text"
+            android:background="@color/verified_blue"
             android:layout_margin="@dimen/post_tweet_button_margin"/>
     </RelativeLayout>
 
