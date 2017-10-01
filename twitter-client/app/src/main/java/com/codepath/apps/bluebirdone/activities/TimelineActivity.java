@@ -94,7 +94,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
                 int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
                 if (tweets.size() != 0
                         && lastVisibleItemPosition != RecyclerView.NO_POSITION
-                        && lastVisibleItemPosition == tweets.size() - 3) {
+                        && lastVisibleItemPosition >= tweets.size() - 3) {
                     Log.d("jenda", "request more");
                     dataConnector.fetchMore();
                 }

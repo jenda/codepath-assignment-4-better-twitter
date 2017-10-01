@@ -44,4 +44,8 @@ public class ModelSerializer {
     public CurrentUser currentUserFromJson(JSONObject jsonObject) {
         return CurrentUser.parseUser(jsonObject, gson);
     }
+
+    public ErrorResponse errorResponseFromJson(JSONObject json) {
+        return ErrorResponse.fromJsonObject(json, gson);
+    }
 }

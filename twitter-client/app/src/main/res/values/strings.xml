@@ -13,6 +13,6 @@
     <string name="posting_tweet_failed">Posting tweet failed</string>
     <string name="ok">Ok</string>
     <string name="fetching_timeline_failed">Fetching timeline failed</string>
-
+    <string name="rate_limit_exceeded_please_wait">Rate Limit exceeded please wait a little.</string>
 
 </resources>

@@ -6,9 +6,9 @@ import android.util.Log;
 
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
+import com.codepath.apps.bluebirdone.models.ErrorResponse;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -24,9 +24,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.protocol.HTTP;
-
-import static com.codepath.apps.bluebirdone.R.id.swipeContainer;
 
 /**
  * Created by jan_spidlen on 9/30/17.
@@ -34,6 +31,9 @@ import static com.codepath.apps.bluebirdone.R.id.swipeContainer;
 
 @Singleton
 public class DataConnector {
+
+    public static final int TWITTER_RATE_LIMIT_CODE = 88;
+    public static final int HTTP_TOO_MANY_REQUESTS = 429;
 
     public interface OnApiFinishedListener {
         void onTweetPosted(Tweet tweet);
@@ -84,63 +84,105 @@ public class DataConnector {
         });
     }
 
-    private boolean isFetching = false;
-    private Date lastFetched = null;
-    private boolean hasMore = true;
-    class Counter {
+    class State {
         int page;
+        boolean isFetching = false;
+        Date lastAttemptToFetch = null;
+        boolean hasMore = true;
+        boolean isRateLimited = false;
     }
-//    private int page = 0;
-    private final Counter counter = new Counter();
+    private final State state = new State();
 
     public void fetchMore() {
         fetchTimeLineInternal();
     }
 
     public void fetchTimeLine() {
-        if (isFetching) {
+        if (state.isFetching) {
             return;
         }
-        counter.page = 0;
+        state.page = 0;
+        state.isRateLimited = false;
         fetchTimeLineInternal();
     }
     private void fetchTimeLineInternal() {
-        if (isFetching) {
+        if (state.isFetching) {
             return;
         }
-        isFetching = true;
+        if (state.isRateLimited) {
+            long nowInMs = new Date().getTime();
+            long lastAttemptToFetchInMs = state.lastAttemptToFetch.getTime();
+            if (nowInMs < (lastAttemptToFetchInMs + 60 * 1000)) {
+                // Rate limit.
+                Log.d("jenda", "rate-limiting");
+                return;
+            }
 
-        lastFetched = new Date();
-        twitterClient.getHomeTimeline(counter.page, new JsonHttpResponseHandler() {
+            Log.d("jenda", "ratelimit-passed-trying again");
+            // Or just pass through
+            state.isRateLimited = false;
+        }
+        state.isFetching = true;
+        state.lastAttemptToFetch = new Date();
+
+        twitterClient.getHomeTimeline(state.page, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
 
-                if (statusCode != HttpURLConnection.HTTP_OK) {
-                    Log.d("jenda",  "statusCode: " + statusCode);
-                    notifyFailure(R.string.fetching_timeline_failed);
-                    return;
+                try {
+                    if (statusCode != HttpURLConnection.HTTP_OK) {
+
+                        Log.d("jenda", "statusCode: " + statusCode);
+                        if (statusCode == HTTP_TOO_MANY_REQUESTS) {
+                            notifyRateLimitError();
+                            return;
+                        }
+                        notifyFailure(R.string.fetching_timeline_failed);
+                        return;
+                    }
+                    List<Tweet> tweets = modelSerializer.tweetsFromJson(jsonArray);
+
+
+                    Log.d("DEBUG", "tweets: " + tweets.size());
+                    for (OnApiFinishedListener l : listeners) {
+                        l.onTimeLineFetched(tweets);
+                    }
+
+                    state.hasMore = tweets.size() != 0;
+                    state.page++;
+                } finally {
+                    state.isFetching = false;
                 }
-                List<Tweet> tweets = modelSerializer.tweetsFromJson(jsonArray);
-
-
-                Log.d("DEBUG", "tweets: " + tweets.size());
-                for(OnApiFinishedListener l: listeners) {
-                    l.onTimeLineFetched(tweets);
-                }
-
-                hasMore = tweets.size() != 0;
-                counter.page++;
-                isFetching = false;
 
             }
             public void onFailure(int statusCode, Header[] headers,
                                   Throwable throwable, JSONObject errorResponse) {
-                throwable.printStackTrace();
-                Log.d("jenda", errorResponse.toString());
-                notifyFailure(R.string.fetching_timeline_failed);
-                isFetching = false;
+                try {
+                    throwable.printStackTrace();
+                    Log.d("jenda", errorResponse.toString());
+
+                    ErrorResponse errRes = modelSerializer.errorResponseFromJson(errorResponse);
+
+                    if (errRes.errors != null) {
+                        for(ErrorResponse.Error err: errRes.errors) {
+                            if (err.code == TWITTER_RATE_LIMIT_CODE) {
+                                notifyRateLimitError();
+                                return;
+                            }
+                        }
+                    }
+
+                    notifyFailure(R.string.fetching_timeline_failed);
+                } finally {
+                    state.isFetching = false;
+                }
             }
         });
+    }
+
+    private void notifyRateLimitError() {
+        state.isRateLimited = true;
+        notifyFailure(R.string.rate_limit_exceeded_please_wait);
     }
 
     private void notifyFailure(@StringRes int messageRes) {
