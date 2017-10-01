@@ -7,7 +7,11 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
-
+buildscript {
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
+    }
+}
 allprojects {
     repositories {
         jcenter()

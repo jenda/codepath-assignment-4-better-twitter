@@ -23,7 +23,12 @@ android {
         }
     }
 }
-
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 repositories {
     jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -67,5 +72,9 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
 
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
+
+    apply plugin: 'com.android.application'
+
+    apply plugin: 'me.tatarka.retrolambda' // make sure to apply last!
 
 }

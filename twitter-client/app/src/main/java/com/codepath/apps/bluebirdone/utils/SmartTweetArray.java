@@ -30,7 +30,6 @@ public class SmartTweetArray extends ArrayList<Tweet> {
         }
     }
 
-
     public boolean add(Tweet e) {
         if (tweetIds.add(e.idStr)) {
             return super.add(e);

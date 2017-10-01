@@ -139,13 +139,10 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     }
 
     private void setupSwipeRefreshContained() {
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        swipeContainer.setOnRefreshListener(() -> {
                 Log.d("jenda", "on refresh");
                 dataConnector.fetchTimeLine();
-            }
-        });
+            });
 
         // Colors.
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
