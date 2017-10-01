@@ -206,6 +206,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         // TODO: Refactor.
         tweets.add(0, tweet);
         tweetAdapter.notifyDataSetChanged();
+
+        LinearLayoutManager layoutManager = (LinearLayoutManager)tweetsRecyclerView.getLayoutManager();
+        layoutManager.scrollToPosition(0);
     }
 
     @Override

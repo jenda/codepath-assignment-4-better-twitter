@@ -116,6 +116,7 @@ public class DataConnector {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
 
                 if (statusCode != HttpURLConnection.HTTP_OK) {
+                    Log.d("jenda",  "statusCode: " + statusCode);
                     notifyFailure(R.string.fetching_timeline_failed);
                     return;
                 }
@@ -134,6 +135,8 @@ public class DataConnector {
             }
             public void onFailure(int statusCode, Header[] headers,
                                   Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+                Log.d("jenda", errorResponse.toString());
                 notifyFailure(R.string.fetching_timeline_failed);
                 isFetching = false;
             }
