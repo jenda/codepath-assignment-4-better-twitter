@@ -9,11 +9,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Created by jan_spidlen on 9/29/17.
  */
-
+@Singleton
 public class ModelSerializer {
 
     private final Gson gson;

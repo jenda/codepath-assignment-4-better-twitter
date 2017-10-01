@@ -2,7 +2,9 @@ package com.codepath.apps.bluebirdone.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,7 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
@@ -22,6 +26,7 @@ import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -36,7 +41,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends BaseBlueBirdOneActivity {
+public class TimelineActivity extends BaseBlueBirdOneActivity implements DataConnector.OnApiFinishedListener {
 
     @Inject
     TwitterClient twitterClient;
@@ -52,11 +57,16 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
 
+    @BindView(R.id.outerLayout)
+    View outerLayout;
+
     List<Tweet> tweets = new ArrayList<>();
     TweetAdapter tweetAdapter;
 
     @Inject
     PostTweetDialog postTweetDialog;
+    @Inject
+    DataConnector dataConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,21 +83,8 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
+        dataConnector.addOnApiFinishedListener(this);
         fetchTimeLine();
-//        twitterClient.getHomeTimeline(1, new JsonHttpResponseHandler() {
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-//                Log.d("DEBUG", "timeline: " + jsonArray.toString());
-//                // Load json array into model classes
-//                tweets.clear();
-//                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
-//                tweetAdapter.notifyDataSetChanged();
-//
-//                if (swipeContainer.isRefreshing()) {
-//                    swipeContainer.setRefreshing(false);
-//                }
-//
-//            }
-//        });
     }
 
     @Override
@@ -189,4 +186,24 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         });
     }
 
+    @Override
+    public void onTweetPosted(Tweet tweet) {
+        // TODO: Refactor.
+        tweets.add(0, tweet);
+        tweetAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFailure(@StringRes int messageRes) {
+        final Snackbar snackbar = Snackbar.make(outerLayout,
+                getApplicationContext().getText(messageRes),
+                Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
+    }
 }

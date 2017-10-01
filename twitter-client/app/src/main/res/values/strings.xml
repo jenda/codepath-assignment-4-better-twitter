@@ -10,6 +10,8 @@
     <string name="post_tweet_placeholder">Tweet like there is no tomorrow...</string>
     <string name="action_logout">Logout</string>
     <string name="tweet_button_text">Chirp</string>
+    <string name="posting_tweet_failed">Posting tweet failed</string>
+    <string name="ok">Ok</string>
 
 
 </resources>

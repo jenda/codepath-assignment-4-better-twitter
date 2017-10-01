@@ -3,6 +3,7 @@ package com.codepath.apps.bluebirdone.dialogs;
 import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,9 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
+import com.codepath.apps.bluebirdone.models.ModelSerializer;
+import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -38,7 +42,7 @@ import static com.codepath.apps.bluebirdone.R.integer.tweet_length;
  * Created by jan_spidlen on 9/29/17.
  */
 
-public class PostTweetDialog extends BaseBlueBirdOneDialog {
+public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnector.OnApiFinishedListener {
 
     private static final String TITLE_ARG = "title";
 
@@ -59,6 +63,10 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
 
     @Inject
     TwitterClient twitterClient;
+    @Inject
+    ModelSerializer modelSerializer;
+    @Inject
+    DataConnector dataConnector;
 
     public CurrentUser currentUser;
 
@@ -80,6 +88,8 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
         setupTweetEditText();
         maybeEnablePostTweetButton();
 
+        dataConnector.addOnApiFinishedListener(this);
+
         Glide.with(this)
                 .load(currentUser.profileImageUrl)
                 .into(currentUserImageView);
@@ -95,7 +105,6 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
     }
-
 
     //////////////////////////
     ///// setups
@@ -124,7 +133,6 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
 
     private void updateReamingCharsCount(int remainingChars) {
         reamingCharsCountTextView.setText(remainingChars + " chars remaining");
-
     }
 
     private void maybeEnablePostTweetButton() {
@@ -138,15 +146,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     @OnClick(R.id.post_tweet_button)
     protected void postTweet() {
         String tweet = tweetTextEditText.getText().toString();
-
-        twitterClient.postTweet(tweet, new JsonHttpResponseHandler() {
-
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                throwable.printStackTrace();
-                Log.d("jenda", errorResponse.toString());
-                Log.d("jenda", "statusCode: " + statusCode);
-            }
-        });
+        dataConnector.postTweet(tweet);
     }
 
     @OnClick(R.id.close_dialog)
@@ -154,4 +154,13 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
         this.dismiss();
     }
 
+    @Override
+    public void onTweetPosted(Tweet tweet) {
+        closeDialog();
+    }
+
+    @Override
+    public void onFailure(@StringRes int messageRes) {
+        closeDialog();
+    }
 }
