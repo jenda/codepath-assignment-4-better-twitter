@@ -23,14 +23,6 @@ import okhttp3.OkHttpClient;
 
 @Module
 public class NetModule {
-
-    @Provides
-    @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
-    }
-
-
     @Provides
     @Singleton
     Cache provideOkHttpCache(Application application) {

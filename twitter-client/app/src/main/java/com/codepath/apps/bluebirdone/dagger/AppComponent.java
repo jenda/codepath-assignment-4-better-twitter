@@ -13,7 +13,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules={AppModule.class, NetModule.class})
-public interface NetComponent {
+public interface AppComponent {
     void inject(TimelineActivity activity);
     void inject(PostTweetDialog postTweetDialog);
 }

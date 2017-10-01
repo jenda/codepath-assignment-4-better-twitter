@@ -1,5 +1,6 @@
 package com.codepath.apps.bluebirdone.dialogs;
 
+import android.content.SharedPreferences;
 import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -69,6 +70,8 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     ModelSerializer modelSerializer;
     @Inject
     DataConnector dataConnector;
+    @Inject
+    SharedPreferences sharedPreferences;
 
     public CurrentUser currentUser;
 

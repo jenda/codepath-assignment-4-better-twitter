@@ -1,8 +1,8 @@
 package com.codepath.apps.bluebirdone;
 
 import com.codepath.apps.bluebirdone.dagger.AppModule;
-import com.codepath.apps.bluebirdone.dagger.DaggerNetComponent;
-import com.codepath.apps.bluebirdone.dagger.NetComponent;
+import com.codepath.apps.bluebirdone.dagger.DaggerAppComponent;
+import com.codepath.apps.bluebirdone.dagger.AppComponent;
 import com.codepath.apps.bluebirdone.dagger.NetModule;
 import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -24,7 +24,7 @@ import android.content.Context;
 public class BlueBirdOneApplication extends Application {
 	private static Context context;
 
-    private NetComponent netComponent;
+    private AppComponent appComponent;
 
 	@Override
 	public void onCreate() {
@@ -37,14 +37,14 @@ public class BlueBirdOneApplication extends Application {
 
 		Stetho.initializeWithDefaults(this);
 
-        netComponent = DaggerNetComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .netModule(new NetModule())
                 .build();
 	}
 
-    public NetComponent getNetComponent() {
-        return netComponent;
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
 	public static TwitterClient getRestClient() {

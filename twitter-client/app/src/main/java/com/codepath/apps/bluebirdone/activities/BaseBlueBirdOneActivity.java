@@ -5,7 +5,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
 import com.codepath.apps.bluebirdone.BlueBirdOneApplication;
-import com.codepath.apps.bluebirdone.dagger.NetComponent;
+import com.codepath.apps.bluebirdone.dagger.AppComponent;
 
 import butterknife.ButterKnife;
 
@@ -26,7 +26,7 @@ public abstract class BaseBlueBirdOneActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    public NetComponent getNetComponent() {
-        return ((BlueBirdOneApplication) getApplication()).getNetComponent();
+    public AppComponent getAppComponent() {
+        return ((BlueBirdOneApplication) getApplication()).getAppComponent();
     }
 }
