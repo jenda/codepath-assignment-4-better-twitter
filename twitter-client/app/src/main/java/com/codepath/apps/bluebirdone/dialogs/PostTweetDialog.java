@@ -29,6 +29,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -162,5 +164,10 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     @Override
     public void onFailure(@StringRes int messageRes) {
         closeDialog();
+    }
+
+    @Override
+    public void onTimeLineFetched(List<Tweet> tweets) {
+
     }
 }

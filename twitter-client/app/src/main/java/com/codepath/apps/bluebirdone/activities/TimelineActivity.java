@@ -27,6 +27,7 @@ import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
+import com.codepath.apps.bluebirdone.utils.SmartTweetArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -60,7 +61,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     @BindView(R.id.outerLayout)
     View outerLayout;
 
-    List<Tweet> tweets = new ArrayList<>();
+    List<Tweet> tweets = new SmartTweetArray();
     TweetAdapter tweetAdapter;
 
     @Inject
@@ -84,7 +85,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
         dataConnector.addOnApiFinishedListener(this);
-        fetchTimeLine();
+        dataConnector.fetchTimeLine();
+
+        
     }
 
     @Override
@@ -128,7 +131,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
             @Override
             public void onRefresh() {
                 Log.d("jenda", "on refresh");
-                fetchTimeLine();
+                dataConnector.fetchTimeLine();
             }
         });
 
@@ -169,22 +172,22 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         });
     }
 
-    private void fetchTimeLine() {
-        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
-            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-                Log.d("DEBUG", "timeline: " + jsonArray.toString());
-                // Load json array into model classes
-                tweets.clear();
-                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
-                tweetAdapter.notifyDataSetChanged();
-
-                if (swipeContainer.isRefreshing()) {
-                    swipeContainer.setRefreshing(false);
-                }
-
-            }
-        });
-    }
+//    private void fetchTimeLine() {
+//        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
+//                Log.d("DEBUG", "timeline: " + jsonArray.toString());
+//                // Load json array into model classes
+//                tweets.clear();
+//                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
+//                tweetAdapter.notifyDataSetChanged();
+//
+//                if (swipeContainer.isRefreshing()) {
+//                    swipeContainer.setRefreshing(false);
+//                }
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onTweetPosted(Tweet tweet) {
@@ -205,5 +208,20 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
             }
         });
         snackbar.show();
+
+        if (swipeContainer.isRefreshing()) {
+            swipeContainer.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onTimeLineFetched(List<Tweet> tweets) {
+        Log.d("jenda", "onTimeLineFetched");
+        this.tweets.addAll(tweets);
+        tweetAdapter.notifyDataSetChanged();
+
+        if (swipeContainer.isRefreshing()) {
+            swipeContainer.setRefreshing(false);
+        }
     }
 }

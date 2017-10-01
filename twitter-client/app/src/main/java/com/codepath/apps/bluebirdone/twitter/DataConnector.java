@@ -8,12 +8,15 @@ import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -21,6 +24,8 @@ import javax.inject.Singleton;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.protocol.HTTP;
+
+import static com.codepath.apps.bluebirdone.R.id.swipeContainer;
 
 /**
  * Created by jan_spidlen on 9/30/17.
@@ -32,6 +37,7 @@ public class DataConnector {
     public interface OnApiFinishedListener {
         void onTweetPosted(Tweet tweet);
         void onFailure(@StringRes int messageRes);
+        void onTimeLineFetched(List<Tweet> tweets);
     }
 
     @Inject
@@ -73,6 +79,32 @@ public class DataConnector {
                 for(OnApiFinishedListener l: listeners) {
                     l.onTweetPosted(tweet);
                 }
+            }
+        });
+    }
+
+
+    public void fetchTimeLine() {
+        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
+                Log.d("DEBUG", "timeline: " + jsonArray.toString());
+
+                if (statusCode != HttpURLConnection.HTTP_OK) {
+                    notifyFailure(R.string.fetching_timeline_failed);
+                    return;
+                }
+                List<Tweet> tweets = modelSerializer.tweetsFromJson(jsonArray);
+
+
+                Log.d("DEBUG", "tweets: " + tweets.size());
+                for(OnApiFinishedListener l: listeners) {
+                    l.onTimeLineFetched(tweets);
+                }
+
+            }
+            public void onFailure(int statusCode, Header[] headers,
+                                  Throwable throwable, JSONObject errorResponse) {
+                notifyFailure(R.string.fetching_timeline_failed);
             }
         });
     }

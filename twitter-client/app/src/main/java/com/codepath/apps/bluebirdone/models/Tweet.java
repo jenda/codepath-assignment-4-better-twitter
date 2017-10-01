@@ -42,6 +42,8 @@ public class Tweet /* extends BaseModel */{
     @SerializedName("favourites_count")
     public int favouritesCount;
 
+    @SerializedName("id_str")
+    public String idStr;//"id_str": "914324973539409921",
 
     @SerializedName("entities")
     Entity entity;

@@ -65,8 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/profile_image_margin"
-        android:layout_below="@+id/tweet_text_text_view"
-        app:srcCompat="@drawable/ic_launcher" />
+        android:layout_below="@+id/tweet_text_text_view" />
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
