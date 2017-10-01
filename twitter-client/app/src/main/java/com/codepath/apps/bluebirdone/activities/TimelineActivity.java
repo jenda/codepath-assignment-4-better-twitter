@@ -184,23 +184,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         });
     }
 
-//    private void fetchTimeLine() {
-//        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-//                Log.d("DEBUG", "timeline: " + jsonArray.toString());
-//                // Load json array into model classes
-//                tweets.clear();
-//                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
-//                tweetAdapter.notifyDataSetChanged();
-//
-//                if (swipeContainer.isRefreshing()) {
-//                    swipeContainer.setRefreshing(false);
-//                }
-//
-//            }
-//        });
-//    }
-
     @Override
     public void onTweetPosted(Tweet tweet) {
         // TODO: Refactor.
