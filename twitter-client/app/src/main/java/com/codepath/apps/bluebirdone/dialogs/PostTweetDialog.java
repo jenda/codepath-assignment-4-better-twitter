@@ -3,6 +3,7 @@ package com.codepath.apps.bluebirdone.dialogs;
 import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -82,8 +83,6 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
                 .load(currentUser.profileImageUrl)
                 .into(currentUserImageView);
 
-        Log.d("jenda", "twitterClient is null: " + (twitterClient == null));
-
         return view;
     }
 
@@ -91,11 +90,14 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        getDialog().setTitle(R.string.post_tweet_placeholder);
-
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
+
+
+    //////////////////////////
+    ///// setups
+    //////////////////////////
 
     private void setupTweetEditText() {
         tweetTextEditText.addTextChangedListener(new TextWatcher() {
@@ -127,6 +129,10 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
         postTweetImageButton.setEnabled(tweetTextEditText.getText().length() != 0);
     }
 
+    //////////////////////////
+    ///// OnClick handlers
+    //////////////////////////
+
     @OnClick(R.id.post_tweet_button)
     protected void postTweet() {
         String tweet = tweetTextEditText.getText().toString();
@@ -145,6 +151,5 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog {
     protected void closeDialog() {
         this.dismiss();
     }
-
 
 }

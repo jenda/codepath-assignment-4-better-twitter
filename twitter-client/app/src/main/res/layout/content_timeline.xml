@@ -7,11 +7,17 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.codepath.apps.bluebirdone.activities.TimelineActivity"
     tools:showIn="@layout/activity_timeline">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tweets_recycler_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tweets_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.constraint.ConstraintLayout>

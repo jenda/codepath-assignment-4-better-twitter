@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
@@ -47,6 +48,8 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     Toolbar toolbar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
 
     List<Tweet> tweets = new ArrayList<>();
     TweetAdapter tweetAdapter;
@@ -63,21 +66,53 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         tweetAdapter = new TweetAdapter(tweets, this);
 
         setUpToolbar();
+        setupSwipeRefreshContained();
 
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
-        twitterClient.getHomeTimeline(1, new JsonHttpResponseHandler() {
-            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
-                Log.d("DEBUG", "timeline: " + jsonArray.toString());
-                // Load json array into model classes
-                tweets.clear();
-                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
-                tweetAdapter.notifyDataSetChanged();
-
-            }
-        });
+        fetchTimeLine();
+//        twitterClient.getHomeTimeline(1, new JsonHttpResponseHandler() {
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
+//                Log.d("DEBUG", "timeline: " + jsonArray.toString());
+//                // Load json array into model classes
+//                tweets.clear();
+//                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
+//                tweetAdapter.notifyDataSetChanged();
+//
+//                if (swipeContainer.isRefreshing()) {
+//                    swipeContainer.setRefreshing(false);
+//                }
+//
+//            }
+//        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.timeline, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout_menu:
+                // Do whatever you want to do on logout click.
+                Log.d("jenda", "logout ");
+                twitterClient.clearAccessToken();
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //////////////////////////
+    ///// setups
+    //////////////////////////
 
     private void setUpToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -88,22 +123,31 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
+    private void setupSwipeRefreshContained() {
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d("jenda", "on refresh");
+                fetchTimeLine();
+            }
+        });
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.timeline, menu);
+        // Colors.
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
-        return true;
     }
+
+    //////////////////////////
+    ///// OnClick handlers
+    //////////////////////////
 
     @OnClick(R.id.fab)
     protected void fabClicked() {
         Log.d("jenda", "fab clicked");
         final FragmentManager fm = getSupportFragmentManager();
-//        PostTweetDialog postTweetDialog = PostTweetDialog.newInstance("Some Title");
-//        postTweetDialog.show(fm, PostTweetDialog.class.getName());
-
         if (postTweetDialog.currentUser != null) {
             postTweetDialog.show(fm, PostTweetDialog.class.getName());
             return;
@@ -125,18 +169,21 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout_menu:
-                // Do whatever you want to do on logout click.
-                Log.d("jenda", "logout ");
-                twitterClient.clearAccessToken();
-                startActivity(new Intent(this, LoginActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    private void fetchTimeLine() {
+        twitterClient.getHomeTimeline(0, new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
+                Log.d("DEBUG", "timeline: " + jsonArray.toString());
+                // Load json array into model classes
+                tweets.clear();
+                tweets.addAll(modelSerializer.tweetsFromJson(jsonArray));
+                tweetAdapter.notifyDataSetChanged();
+
+                if (swipeContainer.isRefreshing()) {
+                    swipeContainer.setRefreshing(false);
+                }
+
+            }
+        });
     }
 
 }
