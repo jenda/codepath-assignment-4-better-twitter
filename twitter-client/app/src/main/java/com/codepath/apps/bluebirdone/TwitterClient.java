@@ -33,9 +33,6 @@ public class TwitterClient extends OAuthBaseClient {
 	public static final String REST_CONSUMER_KEY = "ACPhnmmbdm19MrsdCQE0AU4Za";
 	public static final String REST_CONSUMER_SECRET = "S7JJQ4RQY06JvITXMoyOiYFlQQCctSpVecd6fp08kbGqfBx3Or";
 
-//	Consumer Key (API Key)	dK2804IPPTsmoIrpiS7LItZ8I
-//	Consumer Secret (API Secret)	MNQXIijfqUKFW8jQlIBzfLGL0ACpw5LxbEg80MMg9B0XotFyq0
-
 
 	// Landing page to indicate the OAuth flow worked in case Chrome for Android 25+ blocks navigation back to the app.
 	public static final String FALLBACK_URL = "https://codepath.github.io/android-rest-client-template/success.html";

@@ -222,7 +222,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
             Log.d("jenda", "clearing tweets");
             tweetAdapter.clear();
         }
-        
+
         tweetAdapter.addAll(tweets);
         tweetAdapter.notifyDataSetChanged();
 
