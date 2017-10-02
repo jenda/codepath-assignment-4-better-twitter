@@ -43,7 +43,7 @@ public class Tweet /* extends BaseModel */{
     public int favouritesCount;
 
     @SerializedName("id_str")
-    public String idStr;//"id_str": "914324973539409921",
+    public String idStr;
 
     @SerializedName("entities")
     Entity entity;
@@ -53,7 +53,7 @@ public class Tweet /* extends BaseModel */{
 
     public Media getPhoto() {
         if (entity != null && entity.media != null) {
-            Log.d("jenda", "media: " + entity.media.size());
+//            Log.d("jenda", "media: " + entity.media.size());
             for (Media m : entity.media) {
                 if (m.type.equals("photo")) {
                     return m;

@@ -1,11 +1,14 @@
 package com.codepath.apps.bluebirdone.dialogs;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -38,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.client.cache.Resource;
 
 import static com.codepath.apps.bluebirdone.R.integer.tweet_length;
 
@@ -48,6 +52,7 @@ import static com.codepath.apps.bluebirdone.R.integer.tweet_length;
 public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnector.OnApiFinishedListener {
 
     private static final String TITLE_ARG = "title";
+    public static final String SAVED_TWEET_PREF = "savedTweet";
 
     @BindView(R.id.user_full_name)
     TextView userFullNameTextView;
@@ -105,15 +110,27 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateTweet();
     }
 
     //////////////////////////
     ///// setups
     //////////////////////////
+
+    private void populateTweet() {
+        String savedTweet = sharedPreferences.getString(SAVED_TWEET_PREF, null);
+
+        Log.d("jenda", "savedTweet: " + savedTweet);
+        if (savedTweet != null) {
+            tweetTextEditText.setText(savedTweet);
+        }
+        sharedPreferences.edit().clear().commit();
+    }
 
     private void setupTweetEditText() {
         tweetTextEditText.addTextChangedListener(new TextWatcher() {
@@ -156,17 +173,45 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
 
     @OnClick(R.id.close_dialog)
     protected void closeDialog() {
-        this.dismiss();
+        closeDialog(true);
+    }
+
+    protected void closeDialog(boolean askToSave) {
+        final String tweetToSave = tweetTextEditText.getText().toString();
+        if (askToSave && tweetToSave != null && !tweetToSave.equals("")) {
+            Resources res = this.getResources();
+            AlertDialog alertDialog = new AlertDialog.Builder(this.getActivity()).create();
+            alertDialog.setTitle(res.getString(R.string.unsaved_changes));
+            alertDialog.setMessage(res.getString(R.string.save_progress));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, res.getString(R.string.save_changes),
+                    (DialogInterface dialog, int which) -> {
+
+                Log.d("jenda", "saving: " + tweetToSave);
+                sharedPreferences.edit().putString(SAVED_TWEET_PREF, tweetToSave).commit();
+                tweetTextEditText.setText("");
+                dismiss();
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, res.getString(R.string.no_dont),
+                    (DialogInterface dialog, int which) -> {
+                tweetTextEditText.setText("");
+                dismiss();
+            });
+            alertDialog.show();
+
+        } else {
+            tweetTextEditText.setText("");
+            dismiss();
+        }
     }
 
     @Override
     public void onTweetPosted(Tweet tweet) {
-        closeDialog();
+        closeDialog(false);
     }
 
     @Override
     public void onFailure(@StringRes int messageRes) {
-        closeDialog();
+        closeDialog(true);
     }
 
     @Override

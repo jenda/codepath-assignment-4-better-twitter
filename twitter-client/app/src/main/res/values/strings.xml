@@ -14,5 +14,9 @@
     <string name="ok">Ok</string>
     <string name="fetching_timeline_failed">Fetching timeline failed</string>
     <string name="rate_limit_exceeded_please_wait">Rate Limit exceeded please wait a little.</string>
+    <string name="unsaved_changes">You have unsaved changes</string>
+    <string name="save_progress">Save progress?</string>
+    <string name="save_changes">Yes, save please</string>
+    <string name="no_dont">No, don\'t</string>
 
 </resources>
