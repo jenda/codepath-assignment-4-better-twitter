@@ -2,8 +2,14 @@ package com.codepath.apps.bluebirdone.utils;
 
 import android.text.format.DateUtils;
 
+import com.codepath.apps.bluebirdone.models.Tweet;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -29,5 +35,18 @@ public class Utils {
         }
 
         return relativeDate;
+    }
+
+    public static void sortTweets(List<Tweet> tweets) {
+        Collections.sort(tweets,(Tweet o1, Tweet o2) -> {
+                long time1 = new Date(o1.createdAt).getTime();
+                long time2 = new Date(o2.createdAt).getTime();
+                if (time1 == time2) {
+                    return 0;
+                } else if (time1 < time2) {
+                    return 1;
+                }
+                return -1;
+            });
     }
 }

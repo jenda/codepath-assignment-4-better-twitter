@@ -163,15 +163,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
 
     @OnClick(R.id.fab)
     protected void fabClicked() {
-
-        List<Tweet> tweets = dbController.loadTweets();
-        Log.d("jenda", "tweets.size() " + tweets.size());
-        for(Tweet t: tweets) {
-            Log.d("jenda", "t.user " + (t.user != null));
-        }
-//        if (1 == 1)
-//        return;
-        Log.d("jenda", "fab clicked");
         final FragmentManager fm = getSupportFragmentManager();
         if (postTweetDialog.currentUser != null) {
             postTweetDialog.show(fm, PostTweetDialog.class.getName());
@@ -224,9 +215,15 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     }
 
     @Override
-    public void onTimeLineFetched(List<Tweet> tweets) {
-        Log.d("jenda", "onTimeLineFetched");
-        this.tweets.addAll(tweets);
+    public void onTimeLineFetched(int page, List<Tweet> tweets) {
+        Log.d("jenda", "onTimeLineFetched " + tweets.size());
+        if (page == 0) {
+            // Clear all saved tweets since this is a fresh load.
+            Log.d("jenda", "clearing tweets");
+            tweetAdapter.clear();
+        }
+        
+        tweetAdapter.addAll(tweets);
         tweetAdapter.notifyDataSetChanged();
 
         dbController.clearTweets();

@@ -211,7 +211,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     }
 
     @Override
-    public void onTimeLineFetched(List<Tweet> tweets) {
+    public void onTimeLineFetched(int page, List<Tweet> tweets) {
 
     }
 }

@@ -36,4 +36,9 @@ public class SmartTweetArray extends ArrayList<Tweet> {
         }
         return true;
     }
+
+    public void clear() {
+        super.clear();
+        tweetIds.clear();
+    }
 }

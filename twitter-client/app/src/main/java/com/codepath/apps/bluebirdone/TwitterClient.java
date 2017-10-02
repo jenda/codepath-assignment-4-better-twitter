@@ -25,8 +25,13 @@ import com.loopj.android.http.RequestParams;
 public class TwitterClient extends OAuthBaseClient {
 	public static final BaseApi REST_API_INSTANCE = TwitterApi.instance();
 	public static final String REST_URL = "https://api.twitter.com/1.1";
-	public static final String REST_CONSUMER_KEY = "dK2804IPPTsmoIrpiS7LItZ8I";
-	public static final String REST_CONSUMER_SECRET = "MNQXIijfqUKFW8jQlIBzfLGL0ACpw5LxbEg80MMg9B0XotFyq0";
+	// Test app 2
+//	public static final String REST_CONSUMER_KEY = "dK2804IPPTsmoIrpiS7LItZ8I";
+//	public static final String REST_CONSUMER_SECRET = "MNQXIijfqUKFW8jQlIBzfLGL0ACpw5LxbEg80MMg9B0XotFyq0";
+
+	// Test app 3
+	public static final String REST_CONSUMER_KEY = "ACPhnmmbdm19MrsdCQE0AU4Za";
+	public static final String REST_CONSUMER_SECRET = "S7JJQ4RQY06JvITXMoyOiYFlQQCctSpVecd6fp08kbGqfBx3Or";
 
 //	Consumer Key (API Key)	dK2804IPPTsmoIrpiS7LItZ8I
 //	Consumer Secret (API Secret)	MNQXIijfqUKFW8jQlIBzfLGL0ACpw5LxbEg80MMg9B0XotFyq0

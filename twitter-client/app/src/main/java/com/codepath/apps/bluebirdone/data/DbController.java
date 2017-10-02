@@ -2,6 +2,7 @@ package com.codepath.apps.bluebirdone.data;
 
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.models.User;
+import com.codepath.apps.bluebirdone.utils.Utils;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -39,20 +40,7 @@ public class DbController {
 
     public List<Tweet> loadTweets() {
         List<Tweet> tweets = SQLite.select().from(Tweet.class).queryList();
-        Collections.sort(tweets, new Comparator<Tweet>() {
-            @Override
-            public int compare(Tweet o1, Tweet o2) {
-                long time1 = new Date(o1.createdAt).getTime();
-                long time2 = new Date(o2.createdAt).getTime();
-                if (time1 == time2) {
-                    return 0;
-                } else if (time1 < time2) {
-                    return 1;
-                }
-                return -1;
-            }
-        });
-
+        Utils.sortTweets(tweets);
         return tweets;
     }
 

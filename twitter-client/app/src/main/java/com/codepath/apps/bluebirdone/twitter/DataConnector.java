@@ -38,7 +38,7 @@ public class DataConnector {
     public interface OnApiFinishedListener {
         void onTweetPosted(Tweet tweet);
         void onFailure(@StringRes int messageRes);
-        void onTimeLineFetched(List<Tweet> tweets);
+        void onTimeLineFetched(int page, List<Tweet> tweets);
     }
 
     @Inject
@@ -125,7 +125,8 @@ public class DataConnector {
         state.isFetching = true;
         state.lastAttemptToFetch = new Date();
 
-        twitterClient.getHomeTimeline(state.page, new JsonHttpResponseHandler() {
+        final int currentPageToFetch = state.page;
+        twitterClient.getHomeTimeline(currentPageToFetch, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
 
@@ -145,7 +146,7 @@ public class DataConnector {
 
                     Log.d("DEBUG", "tweets: " + tweets.size());
                     for (OnApiFinishedListener l : listeners) {
-                        l.onTimeLineFetched(tweets);
+                        l.onTimeLineFetched(currentPageToFetch, tweets);
                     }
 
                     state.hasMore = tweets.size() != 0;
