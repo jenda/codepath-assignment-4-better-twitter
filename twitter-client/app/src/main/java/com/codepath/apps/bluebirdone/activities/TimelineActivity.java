@@ -19,6 +19,7 @@ import android.view.Window;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
+import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
@@ -63,6 +64,8 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     PostTweetDialog postTweetDialog;
     @Inject
     DataConnector dataConnector;
+    @Inject
+    DbController dbController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +73,21 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_timeline);
 
-        getAppComponent().inject(this);
-        tweetAdapter = new TweetAdapter(tweets, this);
 
         setUpToolbar();
         setupSwipeRefreshContained();
 
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        getAppComponent().inject(this);
+        tweetAdapter = new TweetAdapter(tweets, this);
         tweetsRecyclerView.setAdapter(tweetAdapter);
+
+        // Load tweets from DB if there is a issue.
+        List<Tweet> tweetsFromDb = dbController.loadTweets();
+        if (tweetsFromDb != null && !tweetsFromDb.isEmpty()) {
+            tweets.addAll(tweetsFromDb);
+            tweetAdapter.notifyDataSetChanged();
+        }
 
         dataConnector.addOnApiFinishedListener(this);
         dataConnector.fetchTimeLine();
@@ -153,6 +163,14 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
 
     @OnClick(R.id.fab)
     protected void fabClicked() {
+
+        List<Tweet> tweets = dbController.loadTweets();
+        Log.d("jenda", "tweets.size() " + tweets.size());
+        for(Tweet t: tweets) {
+            Log.d("jenda", "t.user " + (t.user != null));
+        }
+//        if (1 == 1)
+//        return;
         Log.d("jenda", "fab clicked");
         final FragmentManager fm = getSupportFragmentManager();
         if (postTweetDialog.currentUser != null) {
@@ -179,6 +197,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     @Override
     public void onTweetPosted(Tweet tweet) {
         // TODO: Refactor.
+        dbController.saveTweet(tweet);
         tweets.add(0, tweet);
         tweetAdapter.notifyDataSetChanged();
 
@@ -209,6 +228,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         Log.d("jenda", "onTimeLineFetched");
         this.tweets.addAll(tweets);
         tweetAdapter.notifyDataSetChanged();
+
+        dbController.clearTweets();
+        dbController.saveTweets(tweets);
 
         if (swipeContainer.isRefreshing()) {
             swipeContainer.setRefreshing(false);
