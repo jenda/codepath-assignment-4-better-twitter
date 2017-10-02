@@ -18,5 +18,6 @@
     <string name="save_progress">Save progress?</string>
     <string name="save_changes">Yes, save please</string>
     <string name="no_dont">No, don\'t</string>
+    <string name="fetching_failed_maybe_offline">Fetching data failed maybe you are offline.</string>
 
 </resources>

@@ -142,9 +142,13 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
 
             @Override
             public void afterTextChanged(Editable s) {
-                updateReamingCharsCount(
-                        getResources().getInteger(R.integer.tweet_length) - s.length());
-                maybeEnablePostTweetButton();
+                try {
+                    updateReamingCharsCount(
+                            getResources().getInteger(R.integer.tweet_length) - s.length());
+                    maybeEnablePostTweetButton();
+                } catch (Exception e) {
+
+                }
             }
         });
     }

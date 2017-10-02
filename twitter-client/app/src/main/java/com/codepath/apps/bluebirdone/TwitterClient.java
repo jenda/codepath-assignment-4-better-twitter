@@ -9,6 +9,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 import com.loopj.android.http.RequestParams;
 
+import java.util.function.Consumer;
+
 
 /*
  * 
@@ -30,11 +32,16 @@ public class TwitterClient extends OAuthBaseClient {
 //	public static final String REST_CONSUMER_SECRET = "MNQXIijfqUKFW8jQlIBzfLGL0ACpw5LxbEg80MMg9B0XotFyq0";
 
 	// Test app 3
-	public static final String REST_CONSUMER_KEY = "ACPhnmmbdm19MrsdCQE0AU4Za";
-	public static final String REST_CONSUMER_SECRET = "S7JJQ4RQY06JvITXMoyOiYFlQQCctSpVecd6fp08kbGqfBx3Or";
+//	public static final String REST_CONSUMER_KEY = "ACPhnmmbdm19MrsdCQE0AU4Za";
+//	public static final String REST_CONSUMER_SECRET = "S7JJQ4RQY06JvITXMoyOiYFlQQCctSpVecd6fp08kbGqfBx3Or";
+
+    // Test app 4
+    public static final String REST_CONSUMER_KEY = "s4GbOr9BsCjf0DFbTt0WcrJIN";
+    public static final String REST_CONSUMER_SECRET = "bZ6BLhdtateFOeUaetlBJsFrYXIjvoJSxAj9WJ30Xm8Fpgvvl7";
 
 
-	// Landing page to indicate the OAuth flow worked in case Chrome for Android 25+ blocks navigation back to the app.
+
+    // Landing page to indicate the OAuth flow worked in case Chrome for Android 25+ blocks navigation back to the app.
 	public static final String FALLBACK_URL = "https://codepath.github.io/android-rest-client-template/success.html";
 
 	// See https://developer.chrome.com/multidevice/android/intents

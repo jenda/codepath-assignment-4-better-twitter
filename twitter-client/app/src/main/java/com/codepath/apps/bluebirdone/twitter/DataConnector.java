@@ -159,6 +159,10 @@ public class DataConnector {
             public void onFailure(int statusCode, Header[] headers,
                                   Throwable throwable, JSONObject errorResponse) {
                 try {
+                    if (errorResponse == null) {
+                        notifyFailure(R.string.fetching_failed_maybe_offline);
+                        return;
+                    }
                     throwable.printStackTrace();
                     Log.d("jenda", errorResponse.toString());
 
