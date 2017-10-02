@@ -63,6 +63,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             holder.mediaImageView.setVisibility(View.GONE);
         }
 
+        holder.retweetCountTextView.setText(tweet.retweetCount + " retweets");
+        holder.favsCountTextView.setText(tweet.favouritesCount + " favs");
+
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
                 .into(holder.profileImageView);
@@ -105,6 +108,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         @BindView(R.id.mediaImageView)
         ImageView mediaImageView;
+
+        @BindView(R.id.retweet_count)
+        TextView retweetCountTextView;
+
+        @BindView(R.id.favsCount)
+        TextView favsCountTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
