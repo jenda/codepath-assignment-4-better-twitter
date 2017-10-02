@@ -40,10 +40,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.client.cache.Resource;
-
-import static com.codepath.apps.bluebirdone.R.integer.tweet_length;
 
 /**
  * Created by jan_spidlen on 9/29/17.
