@@ -10,6 +10,12 @@
         <!--app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />-->
 
     <item
+        android:id="@+id/show_profile"
+        android:orderInCategory="100"
+        android:title="@string/action_show_profile"
+        android:icon="@drawable/ic_profile_white"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/logout_menu"
         android:orderInCategory="100"
         android:title="@string/action_logout"
