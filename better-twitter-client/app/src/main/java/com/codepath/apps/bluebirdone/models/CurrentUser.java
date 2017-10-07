@@ -22,6 +22,9 @@ public class CurrentUser {
     @SerializedName("profile_image_url")
     public String profileImageUrl;
 
+    @SerializedName("profile_banner_url")
+    public String profileBackgroundImageUrl;
+
 
     public static CurrentUser parseUser(JSONObject jsonObject, Gson gson) {
         return gson.fromJson(jsonObject.toString(), CurrentUser.class);

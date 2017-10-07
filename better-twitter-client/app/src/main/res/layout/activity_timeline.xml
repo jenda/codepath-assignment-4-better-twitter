@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/outerLayout"
+    android:id="@+id/timeline_activity_outer_layout"
     tools:context="com.codepath.apps.bluebirdone.activities.TimelineActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -63,5 +63,11 @@
         app:fabSize="normal"
         app:useCompatPadding="true"
         app:pressedTranslationZ="12dp" />
+
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fragmentContainerLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
 </android.support.design.widget.CoordinatorLayout>

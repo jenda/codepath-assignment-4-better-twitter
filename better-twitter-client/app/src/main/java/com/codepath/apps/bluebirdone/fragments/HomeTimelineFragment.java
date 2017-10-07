@@ -28,8 +28,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.codepath.apps.bluebirdone.R.id.outerLayout;
-
 /**
  * Created by jan_spidlen on 10/6/17.
  */
@@ -178,11 +176,5 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
         if (swipeContainer.isRefreshing()) {
             swipeContainer.setRefreshing(false);
         }
-    }
-
-    @StringRes
-    @Override
-    public int getName() {
-        return R.string.home_timeline_fragment_title;
     }
 }

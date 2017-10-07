@@ -16,9 +16,4 @@ public class UserMentionsFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    @Override
-    public int getName() {
-        return R.string.user_mentions_fragment_title;
-    }
 }

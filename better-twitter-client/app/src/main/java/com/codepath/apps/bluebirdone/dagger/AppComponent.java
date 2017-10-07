@@ -2,6 +2,7 @@ package com.codepath.apps.bluebirdone.dagger;
 
 import com.codepath.apps.bluebirdone.activities.TimelineActivity;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
+import com.codepath.apps.bluebirdone.fragments.CurrentUserProfileFragment;
 import com.codepath.apps.bluebirdone.fragments.HomeTimelineFragment;
 import com.codepath.apps.bluebirdone.fragments.UserMentionsFragment;
 
@@ -20,4 +21,5 @@ public interface AppComponent {
     void inject(PostTweetDialog postTweetDialog);
     void inject(HomeTimelineFragment fragment);
     void inject(UserMentionsFragment fragment);
+    void inject(CurrentUserProfileFragment fragment);
 }

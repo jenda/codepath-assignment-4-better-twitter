@@ -18,6 +18,7 @@ import com.codepath.apps.bluebirdone.BlueBirdOnePagerAdapter;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
+import com.codepath.apps.bluebirdone.fragments.CurrentUserProfileFragment;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
@@ -47,7 +48,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 //    @BindView(R.id.swipeContainer)
 //    SwipeRefreshLayout swipeContainer;
 
-    @BindView(R.id.outerLayout)
+    @BindView(R.id.timeline_activity_outer_layout)
     View outerLayout;
 
 //    List<Tweet> tweets = new SmartTweetArray();
@@ -70,7 +71,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_timeline);
-
 
         setUpToolbar();
 
@@ -96,9 +96,39 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
                 twitterClient.clearAccessToken();
                 startActivity(new Intent(this, LoginActivity.class));
                 return true;
+            case R.id.show_profile:
+                Log.d("jenda", "show_profile");
+                showCurrentUserProfileFragment();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showCurrentUserProfileFragment() {
+
+        twitterClient.getCurrentUser(new JsonHttpResponseHandler() {
+
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                Log.d("DEBUG", "timeline: " + jsonObject.toString());
+                // Load json array into model classes
+
+                CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
+                currentUserProfileFragment.currentUser = modelSerializer.currentUserFromJson(jsonObject);
+                final FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+                currentUserProfileFragment.show(fragmentManager, CurrentUserProfileFragment.class.getName());
+//                fragmentManager
+//                        .beginTransaction()
+//                        .add(R.id.fragmentContainerLayout, currentUserProfileFragment)
+//                        .commit();
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+            }
+        });
     }
 
     //////////////////////////
@@ -114,20 +144,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("");
     }
-
-//    private void setupSwipeRefreshContained() {
-//        swipeContainer.setOnRefreshListener(() -> {
-//                Log.d("jenda", "on refresh");
-//                dataConnector.fetchTimeLine();
-//            });
-//
-//        // Colors.
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_orange_light,
-//                android.R.color.holo_red_light);
-//
-//    }
 
     //////////////////////////
     ///// OnClick handlers
@@ -156,53 +172,4 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
             }
         });
     }
-
-//    @Override
-//    public void onTweetPosted(Tweet tweet) {
-//        // TODO: Refactor.
-//        dbController.saveTweet(tweet);
-//        tweets.add(0, tweet);
-//        tweetAdapter.notifyDataSetChanged();
-//
-//        LinearLayoutManager layoutManager = (LinearLayoutManager)tweetsRecyclerView.getLayoutManager();
-//        layoutManager.scrollToPosition(0);
-//    }
-//
-//    @Override
-//    public void onFailure(@StringRes int messageRes) {
-//        final Snackbar snackbar = Snackbar.make(outerLayout,
-//                getApplicationContext().getText(messageRes),
-//                Snackbar.LENGTH_INDEFINITE);
-//        snackbar.setAction(R.string.ok, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                snackbar.dismiss();
-//            }
-//        });
-//        snackbar.show();
-//
-//        if (swipeContainer.isRefreshing()) {
-//            swipeContainer.setRefreshing(false);
-//        }
-//    }
-//
-//    @Override
-//    public void onTimeLineFetched(int page, List<Tweet> tweets) {
-//        Log.d("jenda", "onTimeLineFetched " + tweets.size());
-//        if (page == 0) {
-//            // Clear all saved tweets since this is a fresh load.
-//            Log.d("jenda", "clearing tweets");
-//            tweetAdapter.clear();
-//        }
-//
-//        tweetAdapter.addAll(tweets);
-//        tweetAdapter.notifyDataSetChanged();
-//
-//        dbController.clearTweets();
-//        dbController.saveTweets(tweets);
-//
-//        if (swipeContainer.isRefreshing()) {
-//            swipeContainer.setRefreshing(false);
-//        }
-//    }
 }

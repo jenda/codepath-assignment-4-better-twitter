@@ -14,7 +14,4 @@ public abstract class BaseFragment extends Fragment {
     protected AppComponent getComponent() {
         return ((BaseBlueBirdOneActivity)getActivity()).getAppComponent();
     }
-
-    @StringRes
-    public abstract int getName();
 }
