@@ -39,25 +39,18 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     @Inject
     ModelSerializer modelSerializer;
 
-//    @BindView(R.id.tweets_recycler_view)
-//    RecyclerView tweetsRecyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-//    @BindView(R.id.swipeContainer)
-//    SwipeRefreshLayout swipeContainer;
 
     @BindView(R.id.timeline_activity_outer_layout)
     View outerLayout;
 
-//    List<Tweet> tweets = new SmartTweetArray();
-//    TweetAdapter tweetAdapter;
-
     @Inject
     PostTweetDialog postTweetDialog;
-    @Inject
-    DataConnector dataConnector;
+//    @Inject
+//    DataConnector dataConnector;
     @Inject
     DbController dbController;
 

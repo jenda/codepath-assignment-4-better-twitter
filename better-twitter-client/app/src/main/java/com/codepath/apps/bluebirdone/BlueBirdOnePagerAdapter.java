@@ -46,9 +46,9 @@ public class BlueBirdOnePagerAdapter extends FragmentPagerAdapter {
     private BaseFragment getFragmentBasedOnPosition(int position) {
         switch (position) {
             case 0:
-                return HomeTimelineFragment.newInstance();
+                return HomeTimelineFragment.newInstance(HomeTimelineFragment.Type.HOME_TIMELINE);
             case 1:
-                return UserMentionsFragment.newInstance();
+                return HomeTimelineFragment.newInstance(HomeTimelineFragment.Type.USER_MENTIONS);
             default:
                 throw new IllegalArgumentException("bad position: " + position);
         }

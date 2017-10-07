@@ -1,9 +1,9 @@
 package com.codepath.apps.bluebirdone.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
 import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.twitter.CurrentUserMentionsDataConnector;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
+import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
+import com.codepath.apps.bluebirdone.twitter.UserTimelineDataConnector;
 import com.codepath.apps.bluebirdone.utils.SmartTweetArray;
 
 import java.util.List;
@@ -34,10 +36,25 @@ import butterknife.ButterKnife;
 
 public class HomeTimelineFragment extends BaseFragment  implements DataConnector.OnApiFinishedListener{
 
+    public enum Type {
+        HOME_TIMELINE,
+        USER_MENTIONS,
+        USER_TWEETS
+    }
+
     @Inject
     ModelSerializer modelSerializer;
-    @Inject
+
+
     DataConnector dataConnector;
+
+    @Inject
+    HomeTimelineDataConnector homeTimelineDataConnector;
+    @Inject
+    UserTimelineDataConnector userTimelineDataConnector;
+    @Inject
+    CurrentUserMentionsDataConnector currentUserMentionsDataConnector;
+
     @Inject
     DbController dbController;
 
@@ -55,10 +72,22 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
     @BindView(R.id.outer_layout)
     View outerLayout;
 
+    private static final String TYPE_ARG = "type";
+    private static final String USER_ID_ARG = "user_id";
+    private Type type;
+    @Nullable
+    private Long userId;
 
-    public static HomeTimelineFragment newInstance() {
+    public static HomeTimelineFragment newInstance(Type type) {
+        return newInstance(type, null);
+    }
+
+    public static HomeTimelineFragment newInstance(Type type, @Nullable Long userId) {
         Bundle args = new Bundle();
-//        args.putInt(ARG_PAGE, page);
+        args.putSerializable(TYPE_ARG, type);
+        if (userId != null) {
+            args.putLong(USER_ID_ARG, userId);
+        }
         HomeTimelineFragment fragment = new HomeTimelineFragment();
         fragment.setArguments(args);
         return fragment;
@@ -67,14 +96,28 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mPage = getArguments().getInt(ARG_PAGE);
+        type = (Type) getArguments().getSerializable(TYPE_ARG);
+        userId = getArguments().getLong(USER_ID_ARG);
 
+        getComponent().inject(this);
 
+        if (type == Type.HOME_TIMELINE) {
+            dataConnector = homeTimelineDataConnector;
+        } else if (type == Type.USER_MENTIONS) {
+            dataConnector = currentUserMentionsDataConnector;
+        } else {
+            userTimelineDataConnector.setUserId(userId);
+            dataConnector = userTimelineDataConnector;
+        }
+
+        Log.d("jenda", " onCreate " + (dataConnector == null));
+        Log.d("jenda", " onCreate " + type);
     }
+
     private void setupSwipeRefreshContained() {
         swipeContainer.setOnRefreshListener(() -> {
             Log.d("jenda", "on refresh");
-            dataConnector.fetchTimeLine();
+            dataConnector.fetchTweets();
         });
 
         // Colors.
@@ -90,7 +133,6 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_timeline, container, false);
 
-        getComponent().inject(this);
         ButterKnife.bind(this, view);
 
 
@@ -107,7 +149,7 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
         }
 
         dataConnector.addOnApiFinishedListener(this);
-        dataConnector.fetchTimeLine();
+        dataConnector.fetchTweets();
 
         tweetsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 

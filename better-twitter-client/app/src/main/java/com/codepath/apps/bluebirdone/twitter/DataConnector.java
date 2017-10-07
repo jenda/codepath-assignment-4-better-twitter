@@ -9,6 +9,7 @@ import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.ErrorResponse;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -30,7 +31,7 @@ import cz.msebera.android.httpclient.Header;
  */
 
 @Singleton
-public class DataConnector {
+public abstract class DataConnector {
 
     public static final int TWITTER_RATE_LIMIT_CODE = 88;
     public static final int HTTP_TOO_MANY_REQUESTS = 429;
@@ -49,9 +50,6 @@ public class DataConnector {
     Application app;
 
     Set<OnApiFinishedListener> listeners = new HashSet<>();
-
-    @Inject
-    public DataConnector() {}
 
     public void addOnApiFinishedListener(OnApiFinishedListener l) {
         listeners.add(l);
@@ -91,21 +89,23 @@ public class DataConnector {
         boolean hasMore = true;
         boolean isRateLimited = false;
     }
+
     private final State state = new State();
 
     public void fetchMore() {
-        fetchTimeLineInternal();
+        fetchMoreInternal();
     }
 
-    public void fetchTimeLine() {
+    public void fetchTweets() {
         if (state.isFetching) {
             return;
         }
         state.page = 0;
         state.isRateLimited = false;
-        fetchTimeLineInternal();
+        fetchMoreInternal();
     }
-    private void fetchTimeLineInternal() {
+
+    private void fetchMoreInternal() {
         if (state.isFetching) {
             return;
         }
@@ -126,7 +126,8 @@ public class DataConnector {
         state.lastAttemptToFetch = new Date();
 
         final int currentPageToFetch = state.page;
-        twitterClient.getHomeTimeline(currentPageToFetch, new JsonHttpResponseHandler() {
+
+        fetchConcreteData(currentPageToFetch, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
 
@@ -184,6 +185,8 @@ public class DataConnector {
             }
         });
     }
+
+    protected abstract void fetchConcreteData(int page, AsyncHttpResponseHandler handler);
 
     private void notifyRateLimitError() {
         state.isRateLimited = true;

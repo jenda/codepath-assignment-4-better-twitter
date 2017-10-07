@@ -29,6 +29,7 @@ import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
+import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -70,7 +71,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     @Inject
     ModelSerializer modelSerializer;
     @Inject
-    DataConnector dataConnector;
+    HomeTimelineDataConnector dataConnector;
     @Inject
     SharedPreferences sharedPreferences;
 
