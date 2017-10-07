@@ -73,38 +73,10 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 
 
         setUpToolbar();
-//        setupSwipeRefreshContained();
 
         getAppComponent().inject(this);
         viewPager.setAdapter(new BlueBirdOnePagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
-//        tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        tweetAdapter = new TweetAdapter(tweets, this);
-//        tweetsRecyclerView.setAdapter(tweetAdapter);
-
-        // Load tweets from DB if there is a issue.
-//        List<Tweet> tweetsFromDb = dbController.loadTweets();
-//        if (tweetsFromDb != null && !tweetsFromDb.isEmpty()) {
-//            tweets.addAll(tweetsFromDb);
-//            tweetAdapter.notifyDataSetChanged();
-//        }
-//
-//        dataConnector.addOnApiFinishedListener(this);
-//        dataConnector.fetchTimeLine();
-//
-//        tweetsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-//                LinearLayoutManager layoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
-//                int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
-//                if (tweets.size() != 0
-//                        && lastVisibleItemPosition != RecyclerView.NO_POSITION
-//                        && lastVisibleItemPosition >= tweets.size() - 3) {
-//                    Log.d("jenda", "request more");
-//                    dataConnector.fetchMore();
-//                }
-//            }
-//        });
     }
 
     @Override
