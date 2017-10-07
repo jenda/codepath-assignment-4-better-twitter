@@ -20,5 +20,7 @@
     <string name="no_dont">No, don\'t</string>
     <string name="fetching_failed_maybe_offline">Fetching data failed maybe you are offline.</string>
     <string name="action_show_profile">Show Profile</string>
+    <string name="home_timeline_fragment_title">Home</string>
+    <string name="user_mentions_fragment_title">User mentions</string>
 
 </resources>

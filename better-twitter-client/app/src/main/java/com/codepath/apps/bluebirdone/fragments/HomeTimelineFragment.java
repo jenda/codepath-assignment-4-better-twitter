@@ -58,7 +58,7 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
     View outerLayout;
 
 
-    public static HomeTimelineFragment newInstance(int page) {
+    public static HomeTimelineFragment newInstance() {
         Bundle args = new Bundle();
 //        args.putInt(ARG_PAGE, page);
         HomeTimelineFragment fragment = new HomeTimelineFragment();
@@ -178,5 +178,11 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
         if (swipeContainer.isRefreshing()) {
             swipeContainer.setRefreshing(false);
         }
+    }
+
+    @StringRes
+    @Override
+    public int getName() {
+        return R.string.home_timeline_fragment_title;
     }
 }

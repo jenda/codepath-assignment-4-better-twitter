@@ -2,15 +2,10 @@ package com.codepath.apps.bluebirdone.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -19,29 +14,22 @@ import android.view.View;
 import android.view.Window;
 
 import com.codepath.apps.bluebirdone.R;
-import com.codepath.apps.bluebirdone.SampleFragmentPagerAdapter;
+import com.codepath.apps.bluebirdone.BlueBirdOnePagerAdapter;
 import com.codepath.apps.bluebirdone.TwitterClient;
-import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
 import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
-import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
-import com.codepath.apps.bluebirdone.utils.SmartTweetArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
-
-import static com.codepath.apps.bluebirdone.R.id.swipeContainer;
 
 public class TimelineActivity extends BaseBlueBirdOneActivity {
 
@@ -88,7 +76,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 //        setupSwipeRefreshContained();
 
         getAppComponent().inject(this);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(), this));
+        viewPager.setAdapter(new BlueBirdOnePagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
 //        tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        tweetAdapter = new TweetAdapter(tweets, this);
