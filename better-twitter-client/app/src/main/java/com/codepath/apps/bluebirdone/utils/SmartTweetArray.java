@@ -1,10 +1,14 @@
 package com.codepath.apps.bluebirdone.utils;
 
+import android.util.Log;
+
 import com.codepath.apps.bluebirdone.models.Tweet;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,7 +17,7 @@ import java.util.Set;
 
 public class SmartTweetArray extends ArrayList<Tweet> {
 
-    Set<String> tweetIds = new HashSet<>();
+    Map<String, Tweet> tweets = new HashMap<>();
 
     @Override
     public boolean addAll(Collection<? extends Tweet> c) {
@@ -25,13 +29,15 @@ public class SmartTweetArray extends ArrayList<Tweet> {
 
     @Override
     public void add(int i, Tweet e) {
-        if (tweetIds.add(e.idStr)) {
+        if (!tweets.containsKey(e.idStr)) {
+            tweets.put(e.idStr, e);
             super.add(i, e);
         }
     }
 
     public boolean add(Tweet e) {
-        if (tweetIds.add(e.idStr)) {
+        if (!tweets.containsKey(e.idStr)) {
+            tweets.put(e.idStr, e);
             return super.add(e);
         }
         return true;
@@ -39,6 +45,17 @@ public class SmartTweetArray extends ArrayList<Tweet> {
 
     public void clear() {
         super.clear();
-        tweetIds.clear();
+        tweets.clear();
+    }
+
+    public void updateOrInsertTweet(Tweet t) {
+//        Log.d("jenda", "MAP " + tweets);
+        if(tweets.containsKey(t.idStr)) {
+            Tweet currentTweet = tweets.get(t.idStr);
+            currentTweet.updateFrom(t);
+//            Log.d("jenda", "updated tweet " + t.idStr);
+        } else {
+            this.add(t);
+        }
     }
 }

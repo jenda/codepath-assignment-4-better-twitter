@@ -49,16 +49,24 @@ public class Tweet extends BaseModel {
     public int retweetCount;
 
     @Column
-    @SerializedName("favourites_count")
+    @SerializedName("favorite_count")
     public int favouritesCount;
 
     @Column
     @SerializedName("id_str")
     public String idStr;
 
-//    @Column
     @SerializedName("entities")
     Entity entity;
+
+    @SerializedName("retweeted")
+    public boolean retweeted;
+
+    @SerializedName("favorited")
+    public boolean favorited;
+
+    @SerializedName("in_reply_to_status_id")
+    public Long inReplyToStatusId;
 
     public Tweet() {}
 
@@ -80,24 +88,9 @@ public class Tweet extends BaseModel {
         return gson.fromJson(jsonObject.toString(), Tweet.class);
     }
 
-//    public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
-//        ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
-//
-//        for (int i=0; i < jsonArray.length(); i++) {
-//            JSONObject tweetJson = null;
-//            try {
-//                tweetJson = jsonArray.getJSONObject(i);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                continue;
-//            }
-//
-//            Gson gson = new GsonBuilder().create();
-//            Tweet tweet = gson.fromJson(tweetJson.toString(), Tweet.class);
-//            tweet.save();
-//            tweets.add(tweet);
-//        }
-//
-//        return tweets;
-//    }
+    public void updateFrom(Tweet t) {
+        this.favorited = t.favorited;
+        this.retweeted = t.retweeted;
+        this.user = t.user;
+    }
 }

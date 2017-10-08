@@ -6,12 +6,15 @@ import android.util.Log;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.activities.BaseBlueBirdOneActivity;
 import com.codepath.apps.bluebirdone.activities.TimelineActivity;
+import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
+import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.models.User;
 import com.codepath.apps.bluebirdone.utils.Utils;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class TweetPresenter {
     TwitterClient twitterClient;
     @Inject
     ModelSerializer modelSerializer;
+    private TweetAdapter tweetAdapter;
 
 
     @Inject
@@ -48,6 +52,8 @@ public class TweetPresenter {
     public void handleClicked(String handle) {
         activity.onDataLoadStarted();
         twitterClient.getUserInfo(Utils.toScreenName(handle), new JsonHttpResponseHandler() {
+
+            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 try {
                     Log.d("jenda", "users: " + jsonArray);
@@ -59,6 +65,68 @@ public class TweetPresenter {
                     activity.onDataLoadFinished();
                 }
             }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                throwable.printStackTrace();
+                activity.onDataLoadFinished();
+            }
         });
     }
+
+    public void onRetweetClicked(Tweet tweet) {
+        twitterClient.retweet(tweet.id, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                try {
+                    Log.d("jenda", "jsonObject: " + jsonObject);
+                    Tweet tweet = modelSerializer.tweetFromJson(jsonObject);
+                    tweetAdapter.updateOrInsertTweet(tweet);
+//                    tweet
+                } finally {
+                    activity.onDataLoadFinished();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                throwable.printStackTrace();
+                activity.onDataLoadFinished();
+            }
+        });
+
+    }
+
+    public void onFavClicked(Tweet tweet) {
+        Log.d("jenda", "faving " + tweet.id);
+        if (tweet.favorited) {
+            twitterClient.unfav(tweet.id, handler);
+        } else {
+            twitterClient.fav(tweet.id, handler);
+        }
+    }
+
+    public void attachAdapter(TweetAdapter tweetAdapter) {
+        this.tweetAdapter = tweetAdapter;
+    }
+
+    JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+            try {
+                Log.d("jenda", "jsonObject: " + jsonObject);
+                Tweet tweet = modelSerializer.tweetFromJson(jsonObject);
+                tweetAdapter.updateOrInsertTweet(tweet);
+            } finally {
+                activity.onDataLoadFinished();
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            throwable.printStackTrace();
+            activity.onDataLoadFinished();
+        }
+    };
 }

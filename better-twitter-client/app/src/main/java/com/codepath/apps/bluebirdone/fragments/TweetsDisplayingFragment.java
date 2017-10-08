@@ -18,6 +18,7 @@ import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
 import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
 import com.codepath.apps.bluebirdone.twitter.CurrentUserMentionsDataConnector;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
@@ -55,9 +56,11 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
     UserTimelineDataConnector userTimelineDataConnector;
     @Inject
     CurrentUserMentionsDataConnector currentUserMentionsDataConnector;
-
     @Inject
-    DbController dbController;
+    TweetPresenter tweetPresenter;
+
+//    @Inject
+//    DbController dbController;
 
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
@@ -66,7 +69,7 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
     RecyclerView tweetsRecyclerView;
 
 
-    List<Tweet> tweets = new SmartTweetArray();
+    SmartTweetArray tweets = new SmartTweetArray();
     TweetAdapter tweetAdapter;
 
 
@@ -113,6 +116,8 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
 
         Log.d("jenda", " onCreate " + (dataConnector == null));
         Log.d("jenda", " onCreate " + type);
+
+        tweetPresenter.attachActivity((TimelineActivity)this.getActivity());
     }
 
     private void setupSwipeRefreshContained() {
@@ -138,17 +143,16 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
 
 
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        tweetAdapter = new TweetAdapter(tweets, this.getActivity(),
-                ((TimelineActivity)this.getActivity()).presenter);
+        tweetAdapter = new TweetAdapter(tweets, this.getActivity(), tweetPresenter);
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
 
         // Load tweets from DB if there is a issue.
-        List<Tweet> tweetsFromDb = dbController.loadTweets();
-        if (tweetsFromDb != null && !tweetsFromDb.isEmpty()) {
-            tweets.addAll(tweetsFromDb);
-            tweetAdapter.notifyDataSetChanged();
-        }
+//        List<Tweet> tweetsFromDb = dbController.loadTweets();
+//        if (tweetsFromDb != null && !tweetsFromDb.isEmpty()) {
+//            tweets.addAll(tweetsFromDb);
+//            tweetAdapter.notifyDataSetChanged();
+//        }
 
         dataConnector.addOnApiFinishedListener(this);
         dataConnector.fetchTweets();
@@ -176,7 +180,7 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
     @Override
     public void onTweetPosted(Tweet tweet) {
         // TODO: Refactor.
-        dbController.saveTweet(tweet);
+//        dbController.saveTweet(tweet);
         tweets.add(0, tweet);
         tweetAdapter.notifyDataSetChanged();
 
@@ -204,18 +208,18 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
 
     @Override
     public void onTimeLineFetched(int page, List<Tweet> tweets) {
-        Log.d("jenda", "onTimeLineFetched " + tweets.size());
+        Log.d("jenda", "tweetAdapter " + tweetAdapter +  " page " + page + " onTimeLineFetched " + tweets.size());
         if (page == 0) {
             // Clear all saved tweets since this is a fresh load.
-            Log.d("jenda", "clearing tweets");
+            Log.d("jenda", "clearing tweets " + tweetAdapter);
             tweetAdapter.clear();
         }
 
         tweetAdapter.addAll(tweets);
         tweetAdapter.notifyDataSetChanged();
 
-        dbController.clearTweets();
-        dbController.saveTweets(tweets);
+//        dbController.clearTweets();
+//        dbController.saveTweets(tweets);
 
         if (swipeContainer.isRefreshing()) {
             swipeContainer.setRefreshing(false);

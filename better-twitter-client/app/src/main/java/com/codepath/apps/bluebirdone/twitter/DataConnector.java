@@ -31,7 +31,6 @@ import cz.msebera.android.httpclient.Header;
  * Created by jan_spidlen on 9/30/17.
  */
 
-@Singleton
 public abstract class DataConnector {
 
     public static final int TWITTER_RATE_LIMIT_CODE = 88;

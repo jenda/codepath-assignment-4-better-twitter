@@ -11,6 +11,8 @@ import com.loopj.android.http.RequestParams;
 
 import java.util.function.Consumer;
 
+import static com.codepath.apps.bluebirdone.models.User_Table.screenName;
+
 
 /*
  * 
@@ -32,12 +34,12 @@ public class TwitterClient extends OAuthBaseClient {
 //	public static final String REST_CONSUMER_SECRET = "MNQXIijfqUKFW8jQlIBzfLGL0ACpw5LxbEg80MMg9B0XotFyq0";
 
 	// Test app 3
-//	public static final String REST_CONSUMER_KEY = "ACPhnmmbdm19MrsdCQE0AU4Za";
-//	public static final String REST_CONSUMER_SECRET = "S7JJQ4RQY06JvITXMoyOiYFlQQCctSpVecd6fp08kbGqfBx3Or";
+	public static final String REST_CONSUMER_KEY = "ACPhnmmbdm19MrsdCQE0AU4Za";
+    public static final String REST_CONSUMER_SECRET = "S7JJQ4RQY06JvITXMoyOiYFlQQCctSpVecd6fp08kbGqfBx3Or";
 
     // Test app 4
-    public static final String REST_CONSUMER_KEY = "s4GbOr9BsCjf0DFbTt0WcrJIN";
-    public static final String REST_CONSUMER_SECRET = "bZ6BLhdtateFOeUaetlBJsFrYXIjvoJSxAj9WJ30Xm8Fpgvvl7";
+//    public static final String REST_CONSUMER_KEY = "s4GbOr9BsCjf0DFbTt0WcrJIN";
+//    public static final String REST_CONSUMER_SECRET = "bZ6BLhdtateFOeUaetlBJsFrYXIjvoJSxAj9WJ30Xm8Fpgvvl7";
 
 
 
@@ -106,7 +108,6 @@ public class TwitterClient extends OAuthBaseClient {
 
     public void follow(Long userId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("friendships/create.json");
-        // add user_id
         RequestParams params = new RequestParams();
         params.put("user_id", userId);
         getClient().post(apiUrl, params, handler);
@@ -114,7 +115,6 @@ public class TwitterClient extends OAuthBaseClient {
 
     public void unfollow(Long userId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("friendships/destroy.json");
-        // add user_id
         RequestParams params = new RequestParams();
         params.put("user_id", userId);
         getClient().post(apiUrl, params, handler);
@@ -122,7 +122,6 @@ public class TwitterClient extends OAuthBaseClient {
 
     public void getUserInfo(Long userId, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("users/lookup.json");
-        // add user_id
         RequestParams params = new RequestParams();
         params.put("user_id", userId);
         getClient().get(apiUrl, params, handler);
@@ -130,10 +129,28 @@ public class TwitterClient extends OAuthBaseClient {
 
     public void getUserInfo(String screenName, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("users/lookup.json");
-        // add user_id
         RequestParams params = new RequestParams();
         params.put("screen_name", screenName);
         getClient().get(apiUrl, params, handler);
+    }
+
+    public void retweet(Long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("statuses/retweet/%s.json", tweetId));
+        RequestParams params = new RequestParams();
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void fav(Long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("favorites/create.json");
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        getClient().post(apiUrl, params, handler);
+    }
+    public void unfav(Long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("favorites/destroy.json");
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        getClient().post(apiUrl, params, handler);
     }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

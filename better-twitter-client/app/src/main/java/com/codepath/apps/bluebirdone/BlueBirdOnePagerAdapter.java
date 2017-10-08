@@ -14,7 +14,6 @@ import com.codepath.apps.bluebirdone.fragments.TweetsDisplayingFragment;
 
 public class BlueBirdOnePagerAdapter extends FragmentPagerAdapter {
     private final String[] tabs;
-    final int PAGE_COUNT = 2;
     private Context context;
 
     public BlueBirdOnePagerAdapter(FragmentManager fm, Context context) {

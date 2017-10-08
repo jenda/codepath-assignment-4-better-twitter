@@ -61,10 +61,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     PostTweetDialog postTweetDialog;
 
     @Inject
-    public
-    TweetPresenter presenter;
-
-    @Inject
     UserTimelineDataConnector userTimelineDataConnector;
     @Inject
     HomeTimelineDataConnector homeTimelineDataConnector;
@@ -99,8 +95,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         viewPager.setAdapter(new BlueBirdOnePagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
 //        materialViewPager.getPagerTitleStrip().setViewPager(viewPager);
-
-        presenter.attachActivity(this);
 
         prepareProgressDialog();
         userTimelineDataConnector.addLoaderListener(this);
