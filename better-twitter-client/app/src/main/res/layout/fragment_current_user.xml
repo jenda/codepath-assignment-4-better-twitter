@@ -66,8 +66,8 @@
         android:layout_alignBaseline="@+id/following_label"
         android:layout_alignBottom="@+id/following_label"
         android:layout_alignStart="@+id/user_description"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@android:color/black"
         tools:text="1234" />
 
     <TextView
@@ -75,6 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/following"
+        android:layout_marginStart="@dimen/followers_label_left_margin"
         android:layout_below="@+id/user_description"
         android:text="@string/following"/>
 
@@ -83,15 +84,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/followers_label"
-        android:layout_alignBottom="@+id/followers_label"
-        android:layout_toEndOf="@+id/user_full_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_toEndOf="@+id/following_label"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="@dimen/description_margin"
         android:textStyle="bold"
-        tools:text="1234" />
+        tools:text="1.0M" />
+
     <TextView
         android:id="@+id/followers_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/followers_label_left_margin"
         android:layout_below="@+id/user_description"
         android:layout_toEndOf="@+id/followers"
         android:text="@string/followers" />
@@ -107,7 +110,7 @@
         android:background="@color/verified_blue"
         android:textColor="@color/white"
         android:padding="@dimen/post_tweet_name_padding"
-        android:layout_marginEnd="@dimen/follow_button_right_margin"
+        android:layout_margin="@dimen/follow_button_right_margin"
         tools:src="@mipmap/ic_launcher" />
 
     <FrameLayout

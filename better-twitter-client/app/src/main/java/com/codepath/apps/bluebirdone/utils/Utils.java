@@ -41,9 +41,11 @@ public class Utils {
     }
 
     public static String formatLargeNumber(long number) {
+        final int H = 100;
         final int K = 1000;
+        final int K100 = 100 * K;
         final int M = 1000000;
-        if (number < K) {
+        if (number < H) {
             return "" + number;
         }
         double relativeNum = number;
@@ -51,8 +53,14 @@ public class Utils {
         if (number >= M) {
             relativeNum = relativeNum/M;
             suffix = "M";
+        } else if (number >= K100) {
+            relativeNum = relativeNum/K100;
+            suffix = "M";
         } else if (number >= K) {
             relativeNum = relativeNum/K;
+            suffix = "K";
+        } else if (number >= H) {
+            relativeNum = relativeNum/H;
             suffix = "K";
         }
         DecimalFormat df = new DecimalFormat("#.#");

@@ -20,5 +20,6 @@
     <dimen name="profile_divider_height">10dp</dimen>
     <dimen name="description_margin">10dp</dimen>
     <dimen name="follow_button_right_margin">5dp</dimen>
+    <dimen name="followers_label_left_margin">5dp</dimen>
 
 </resources>
