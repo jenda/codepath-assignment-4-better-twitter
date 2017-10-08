@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +56,9 @@ public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
 
     @BindView(R.id.tweets_container)
     FrameLayout frameLayout;
+
+    @BindView(R.id.follow_button)
+    Button followButton;
 
     @Inject
     public CurrentUserProfileFragment() {

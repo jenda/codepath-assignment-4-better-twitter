@@ -32,8 +32,9 @@
         android:layout_below="@+id/profile_image_view"
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/name_text_size"
-        tools:text="Jan Spidlen"/>
+        tools:text="Jan Spidlen" />
 
     <TextView
         android:id="@+id/user_handle"
@@ -48,13 +49,14 @@
         android:id="@+id/user_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_handle"
         android:layout_alignStart="@+id/user_full_name"
-        android:layout_marginTop="@dimen/description_margin"
+        android:layout_below="@+id/user_handle"
         android:layout_marginBottom="@dimen/description_margin"
+        android:layout_marginTop="@dimen/description_margin"
+        android:textColor="@android:color/black"
         tools:text="There are few more libraries which provides you a way to directly download image
          from url and make it rounded. I have seen GlideTransformation and PicassoTransformation
-          library created by wasabeef which provides similar kind of functionality."/>
+          library created by wasabeef which provides similar kind of functionality." />
 
 
     <TextView
@@ -70,15 +72,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_description"
-        android:layout_toRightOf="@+id/following"
-        android:layout_marginLeft="30dp"
+        android:layout_toEndOf="@+id/following"
+        android:layout_marginStart="30dp"
         tools:text="1234 Followers" />
+
+
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/followers"
+        android:layout_alignParentEnd="true"
+        android:text="@string/follow"
+        android:background="@color/verified_blue"
+        android:textColor="@color/white"
+        tools:src="@mipmap/ic_launcher" />
 
     <FrameLayout
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_divider_height"
-        android:layout_below="@id/following"
+        android:layout_below="@id/follow_button"
         android:background="@color/grayish_blue"
         android:layout_marginTop="@dimen/profile_image_margin"
         android:layout_marginBottom="@dimen/profile_image_margin"/>
