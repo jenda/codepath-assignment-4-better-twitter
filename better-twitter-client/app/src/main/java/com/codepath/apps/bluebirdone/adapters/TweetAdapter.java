@@ -1,6 +1,7 @@
 package com.codepath.apps.bluebirdone.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -15,9 +17,11 @@ import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.models.User;
 import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
+import com.codepath.apps.bluebirdone.utils.PatternEditableBuilder;
 import com.codepath.apps.bluebirdone.utils.Utils;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -59,6 +63,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = tweets.get(position);
 
         holder.tweetTextTextView.setText(tweet.text);
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                Toast.makeText(context, "Clicked username: " + text,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }).into(holder.tweetTextTextView);
+
         holder.timeAgoTextView.setText(Utils.getRelativeTimeAgo(tweet.createdAt));
 
         holder.userNameTextView.setText(tweet.user.name);
