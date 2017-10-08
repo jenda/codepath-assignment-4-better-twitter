@@ -80,4 +80,8 @@ public class Utils {
                 return -1;
             });
     }
+
+    public static String toScreenName(String handle) {
+        return handle.replace("@", "");
+    }
 }

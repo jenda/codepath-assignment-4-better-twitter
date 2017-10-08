@@ -30,6 +30,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
 
+import static android.R.attr.handle;
+
 /**
  * Created by jan_spidlen on 9/28/17.
  */
@@ -64,13 +66,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         holder.tweetTextTextView.setText(tweet.text);
         new PatternEditableBuilder().
-                addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
-                        new PatternEditableBuilder.SpannableClickedListener() {
-                            @Override
-                            public void onSpanClicked(String text) {
-                                Toast.makeText(context, "Clicked username: " + text,
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                addPattern(Pattern.compile("\\@(\\w+)"),
+                        context.getColor(R.color.dark_blue),
+                        (String handle) -> {
+                            presenter.handleClicked(handle);
                         }).into(holder.tweetTextTextView);
 
         holder.timeAgoTextView.setText(Utils.getRelativeTimeAgo(tweet.createdAt));

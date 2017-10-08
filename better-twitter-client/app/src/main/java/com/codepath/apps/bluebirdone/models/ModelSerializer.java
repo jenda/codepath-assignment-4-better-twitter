@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -53,5 +54,17 @@ public class ModelSerializer {
 
     public ErrorResponse errorResponseFromJson(JSONObject json) {
         return ErrorResponse.fromJsonObject(json, gson);
+    }
+
+    public List<User> usersFromJson(JSONArray jsonArray) {
+        final ArrayList<User> users = new ArrayList<>(jsonArray.length());
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                users.add(userFromJson(jsonArray.getJSONObject(i)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return users;
     }
 }
