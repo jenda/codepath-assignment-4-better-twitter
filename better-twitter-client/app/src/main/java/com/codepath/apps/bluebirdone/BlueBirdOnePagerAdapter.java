@@ -6,8 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.codepath.apps.bluebirdone.fragments.BaseFragment;
-import com.codepath.apps.bluebirdone.fragments.HomeTimelineFragment;
-import com.codepath.apps.bluebirdone.fragments.UserMentionsFragment;
+import com.codepath.apps.bluebirdone.fragments.TweetsDisplayingFragment;
 
 /**
  * Created by jan_spidlen on 10/6/17.
@@ -46,9 +45,9 @@ public class BlueBirdOnePagerAdapter extends FragmentPagerAdapter {
     private BaseFragment getFragmentBasedOnPosition(int position) {
         switch (position) {
             case 0:
-                return HomeTimelineFragment.newInstance(HomeTimelineFragment.Type.HOME_TIMELINE);
+                return TweetsDisplayingFragment.newInstance(TweetsDisplayingFragment.Type.HOME_TIMELINE);
             case 1:
-                return HomeTimelineFragment.newInstance(HomeTimelineFragment.Type.USER_MENTIONS);
+                return TweetsDisplayingFragment.newInstance(TweetsDisplayingFragment.Type.USER_MENTIONS);
             default:
                 throw new IllegalArgumentException("bad position: " + position);
         }

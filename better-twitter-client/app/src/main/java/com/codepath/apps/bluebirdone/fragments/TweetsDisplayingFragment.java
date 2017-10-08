@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  * Created by jan_spidlen on 10/6/17.
  */
 
-public class HomeTimelineFragment extends BaseFragment  implements DataConnector.OnApiFinishedListener{
+public class TweetsDisplayingFragment extends BaseFragment  implements DataConnector.OnApiFinishedListener{
 
     public enum Type {
         HOME_TIMELINE,
@@ -78,17 +78,17 @@ public class HomeTimelineFragment extends BaseFragment  implements DataConnector
     @Nullable
     private Long userId;
 
-    public static HomeTimelineFragment newInstance(Type type) {
+    public static TweetsDisplayingFragment newInstance(Type type) {
         return newInstance(type, null);
     }
 
-    public static HomeTimelineFragment newInstance(Type type, @Nullable Long userId) {
+    public static TweetsDisplayingFragment newInstance(Type type, @Nullable Long userId) {
         Bundle args = new Bundle();
         args.putSerializable(TYPE_ARG, type);
         if (userId != null) {
             args.putLong(USER_ID_ARG, userId);
         }
-        HomeTimelineFragment fragment = new HomeTimelineFragment();
+        TweetsDisplayingFragment fragment = new TweetsDisplayingFragment();
         fragment.setArguments(args);
         return fragment;
     }
