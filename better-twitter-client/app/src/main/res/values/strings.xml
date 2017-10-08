@@ -27,5 +27,6 @@
     <string name="followed">Followed</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="loading_data">Loading data...</string>
 
 </resources>

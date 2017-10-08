@@ -1,5 +1,6 @@
 package com.codepath.apps.bluebirdone.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,10 @@ import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.User;
 import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
+import com.codepath.apps.bluebirdone.twitter.CurrentUserMentionsDataConnector;
+import com.codepath.apps.bluebirdone.twitter.DataConnector;
+import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
+import com.codepath.apps.bluebirdone.twitter.UserTimelineDataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -33,7 +38,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends BaseBlueBirdOneActivity {
+public class TimelineActivity extends BaseBlueBirdOneActivity implements DataConnector.LoaderListener {
 
     @Inject
     TwitterClient twitterClient;
@@ -52,12 +57,28 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     PostTweetDialog postTweetDialog;
 
     @Inject
-    public TweetPresenter presenter;
+    public
+    TweetPresenter presenter;
+
+    @Inject
+    UserTimelineDataConnector userTimelineDataConnector;
+    @Inject
+    HomeTimelineDataConnector homeTimelineDataConnector;
+    @Inject
+    CurrentUserMentionsDataConnector currentUserMentionsDataConnector;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
+
+    ProgressDialog progressDialog;
+
+    private void prepareProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(getResources().getString(R.string.loading_data));
+        progressDialog.setCancelable(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +93,11 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         presenter.attachActivity(this);
+
+        prepareProgressDialog();
+        userTimelineDataConnector.addLoaderListener(this);
+        homeTimelineDataConnector.addLoaderListener(this);
+        currentUserMentionsDataConnector.addLoaderListener(this);
     }
 
     @Override
@@ -172,5 +198,15 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
                 throwable.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onDataLoadStarted() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void onDataLoadFinished() {
+        progressDialog.dismiss();
     }
 }

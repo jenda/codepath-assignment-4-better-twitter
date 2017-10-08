@@ -43,6 +43,11 @@ public abstract class DataConnector {
         void onTimeLineFetched(int page, List<Tweet> tweets);
     }
 
+    public interface LoaderListener {
+        void onDataLoadStarted();
+        void onDataLoadFinished();
+    }
+
 
     @Inject
     TwitterClient twitterClient;
@@ -51,10 +56,26 @@ public abstract class DataConnector {
     @Inject
     Application app;
 
+
     Set<OnApiFinishedListener> listeners = new HashSet<>();
+    Set<LoaderListener> loadListeners = new HashSet<>();
 
     public void addOnApiFinishedListener(OnApiFinishedListener l) {
         listeners.add(l);
+    }
+    public void addLoaderListener(LoaderListener l) {
+        loadListeners.add(l);
+    }
+
+    private void notifyLoadingStarted() {
+        for(LoaderListener l: loadListeners) {
+            l.onDataLoadStarted();
+        }
+    }
+    private void notifyDataLoadFinished() {
+        for(LoaderListener l: loadListeners) {
+            l.onDataLoadFinished();
+        }
     }
 
     public void postTweet(String tweet) {
@@ -129,6 +150,8 @@ public abstract class DataConnector {
 
         final int currentPageToFetch = state.page;
 
+        notifyLoadingStarted();
+
         fetchConcreteData(currentPageToFetch, new JsonHttpResponseHandler() {
             public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                 Log.d("DEBUG", "timeline: " + jsonArray.toString());
@@ -156,6 +179,7 @@ public abstract class DataConnector {
                     state.page++;
                 } finally {
                     state.isFetching = false;
+                    notifyDataLoadFinished();
                 }
 
             }
@@ -183,6 +207,7 @@ public abstract class DataConnector {
                     notifyFailure(R.string.fetching_timeline_failed);
                 } finally {
                     state.isFetching = false;
+                    notifyDataLoadFinished();
                 }
             }
         });

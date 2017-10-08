@@ -138,7 +138,8 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
 
 
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        tweetAdapter = new TweetAdapter(tweets, this.getActivity(), ((TimelineActivity)this.getActivity()).presenter);
+        tweetAdapter = new TweetAdapter(tweets, this.getActivity(),
+                ((TimelineActivity)this.getActivity()).presenter);
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
 
