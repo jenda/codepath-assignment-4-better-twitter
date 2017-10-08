@@ -24,6 +24,20 @@
         android:layout_marginTop="@dimen/profile_image_margin_top"
         app:srcCompat="@drawable/ic_launcher" />
 
+
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_photo"
+        android:layout_alignParentEnd="true"
+        android:text="@string/follow"
+        android:background="@color/verified_blue"
+        android:textColor="@color/white"
+        android:padding="@dimen/post_tweet_name_padding"
+        android:layout_margin="@dimen/follow_button_right_margin"
+        tools:src="@mipmap/ic_launcher" />
+
     <TextView
         android:id="@+id/user_full_name"
         android:layout_width="wrap_content"
@@ -53,6 +67,7 @@
         android:layout_below="@+id/user_handle"
         android:layout_marginBottom="@dimen/description_margin"
         android:layout_marginTop="@dimen/description_margin"
+        android:autoLink="all"
         android:textColor="@android:color/black"
         tools:text="There are few more libraries which provides you a way to directly download image
          from url and make it rounded. I have seen GlideTransformation and PicassoTransformation
@@ -99,25 +114,11 @@
         android:layout_toEndOf="@+id/followers"
         android:text="@string/followers" />
 
-
-    <Button
-        android:id="@+id/follow_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/followers"
-        android:layout_alignParentEnd="true"
-        android:text="@string/follow"
-        android:background="@color/verified_blue"
-        android:textColor="@color/white"
-        android:padding="@dimen/post_tweet_name_padding"
-        android:layout_margin="@dimen/follow_button_right_margin"
-        tools:src="@mipmap/ic_launcher" />
-
     <FrameLayout
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_divider_height"
-        android:layout_below="@id/follow_button"
+        android:layout_below="@id/followers_label"
         android:background="@color/grayish_blue"
         android:layout_marginTop="@dimen/profile_image_margin"
         android:layout_marginBottom="@dimen/profile_image_margin"/>
