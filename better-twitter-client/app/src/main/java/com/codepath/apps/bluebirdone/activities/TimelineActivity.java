@@ -18,7 +18,7 @@ import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.BlueBirdOnePagerAdapter;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
-import com.codepath.apps.bluebirdone.fragments.CurrentUserProfileFragment;
+import com.codepath.apps.bluebirdone.fragments.UserProfileFragment;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.User;
@@ -150,12 +150,12 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     }
 
     public void showUserProfileFragment(User user) {
-        CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
-        currentUserProfileFragment.user = user;
+        UserProfileFragment userProfileFragment = new UserProfileFragment();
+        userProfileFragment.user = user;
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
 
-        currentUserProfileFragment.show(fragmentManager, CurrentUserProfileFragment.class.getName());
+        userProfileFragment.show(fragmentManager, UserProfileFragment.class.getName());
     }
 
     //////////////////////////

@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Created by jan_spidlen on 10/6/17.
  */
 
-public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
+public class UserProfileFragment extends BaseBlueBirdOneDialog {
 
     public User user;
 
@@ -78,7 +78,7 @@ public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
     UserProfilePresenter userProfilePresenter;
 
     @Inject
-    public CurrentUserProfileFragment() {
+    public UserProfileFragment() {
     }
 
     @Override

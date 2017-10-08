@@ -3,7 +3,7 @@ package com.codepath.apps.bluebirdone.presenters;
 import android.util.Log;
 
 import com.codepath.apps.bluebirdone.TwitterClient;
-import com.codepath.apps.bluebirdone.fragments.CurrentUserProfileFragment;
+import com.codepath.apps.bluebirdone.fragments.UserProfileFragment;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,7 +25,7 @@ public class UserProfilePresenter {
     @Inject
     ModelSerializer modelSerializer;
 
-    private CurrentUserProfileFragment userProfileFragment;
+    private UserProfileFragment userProfileFragment;
 
     @Inject
     public UserProfilePresenter() {}
@@ -57,7 +57,7 @@ public class UserProfilePresenter {
         }
     }
 
-    public void setCurrentUserProfileFragment(CurrentUserProfileFragment userProfileFragment) {
+    public void setCurrentUserProfileFragment(UserProfileFragment userProfileFragment) {
         this.userProfileFragment = userProfileFragment;
     }
 }
