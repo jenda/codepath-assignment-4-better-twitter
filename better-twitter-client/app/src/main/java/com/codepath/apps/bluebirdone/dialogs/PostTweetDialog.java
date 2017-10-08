@@ -7,6 +7,7 @@ import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
@@ -82,11 +84,17 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getComponent().inject(this);
+        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_tweet, container);
 
-        getComponent().inject(this);
         ButterKnife.bind(this, view);
 
         userFullNameTextView.setText(currentUser.name);
@@ -99,6 +107,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
 
         Glide.with(this)
                 .load(currentUser.profileImageUrl)
+                .apply(RequestOptions.circleCropTransform())
                 .into(currentUserImageView);
 
         return view;
