@@ -59,9 +59,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     View outerLayout;
 
     @Inject
-    PostTweetDialog postTweetDialog;
-
-    @Inject
     UserTimelineDataConnector userTimelineDataConnector;
     @Inject
     HomeTimelineDataConnector homeTimelineDataConnector;
@@ -204,7 +201,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     public void showPostTweetDialog(Tweet replyTo) {
 
         final FragmentManager fm = getSupportFragmentManager();
-        postTweetDialog.setReplyToTweet(replyTo);
+        final PostTweetDialog postTweetDialog = PostTweetDialog.newInstance(replyTo);
         if (postTweetDialog.currentUser != null) {
             postTweetDialog.show(fm, PostTweetDialog.class.getName());
             return;

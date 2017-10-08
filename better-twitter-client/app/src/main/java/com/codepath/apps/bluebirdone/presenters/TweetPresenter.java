@@ -76,7 +76,6 @@ public class TweetPresenter {
     public void onRetweetClicked(final Tweet tweet) {
 
         JsonHttpResponseHandler retweetHandler = new JsonHttpResponseHandler() {
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 try {
@@ -100,8 +99,10 @@ public class TweetPresenter {
         };
         if (!tweet.retweeted) {
             twitterClient.retweet(tweet.id, retweetHandler);
+            tweet.retweetCount++;
         } else {
             twitterClient.unretweet(tweet.id, retweetHandler);
+            tweet.retweetCount--;
         }
 
     }
@@ -126,9 +127,6 @@ public class TweetPresenter {
             try {
                 Log.d("jenda", "jsonObject: " + jsonObject);
                 Tweet tweet = modelSerializer.tweetFromJson(jsonObject);
-                Log.d("jenda", "tweet.retweetedStatus " + tweet.retweetedStatus);
-                tweet.retweeted = tweet.retweetedStatus != null;
-                Log.d("jenda", "tweet.retweeted " + tweet.retweeted);
                 tweetAdapter.updateOrInsertTweet(tweet);
             } finally {
                 activity.onDataLoadFinished();

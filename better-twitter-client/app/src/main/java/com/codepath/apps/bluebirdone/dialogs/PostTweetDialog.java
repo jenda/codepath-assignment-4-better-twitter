@@ -29,11 +29,13 @@ import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.models.User;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -42,6 +44,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.R.attr.fragment;
 
 /**
  * Created by jan_spidlen on 9/29/17.
@@ -77,16 +81,24 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     SharedPreferences sharedPreferences;
 
     public CurrentUser currentUser;
+    private static final String TWEET_ID_ARG = "tweet_id";
     private Tweet replyToTweet;
 
-    @Inject
-    public PostTweetDialog() {
+    public static PostTweetDialog newInstance(Tweet replyToTweet) {
+        PostTweetDialog fragment = new PostTweetDialog();
+        Bundle args = new Bundle();
+        if (replyToTweet != null) {
+            args.putParcelable(TWEET_ID_ARG, Parcels.wrap(replyToTweet));
+        }
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getComponent().inject(this);
+        replyToTweet = (Tweet) Parcels.unwrap(getArguments().getParcelable(TWEET_ID_ARG));
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
     }
 

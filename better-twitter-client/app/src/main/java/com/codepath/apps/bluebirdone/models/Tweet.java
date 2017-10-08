@@ -97,6 +97,8 @@ public class Tweet extends BaseModel {
         Log.d("jenda", "update " + t.id);
         this.favorited = t.favorited;
         this.retweeted = t.retweeted;
+        this.favouritesCount = t.favouritesCount;
+        this.retweetCount = t.retweetCount;
         this.retweetedStatus = t.retweetedStatus;
         this.user = t.user;
     }
