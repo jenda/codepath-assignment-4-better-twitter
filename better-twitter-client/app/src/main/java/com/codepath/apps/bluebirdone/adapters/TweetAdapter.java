@@ -72,7 +72,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         holder.tweetTextTextView.setText(tweet.text);
         new PatternEditableBuilder().
-                addPattern(Pattern.compile("\\@(\\w+)"),
+                addPattern(Pattern.compile("(\\@|#)(\\w+)"),
                         context.getColor(R.color.dark_blue),
                         (String handle) -> {
                             presenter.handleClicked(handle);
