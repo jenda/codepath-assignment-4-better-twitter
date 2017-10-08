@@ -21,5 +21,8 @@
     <dimen name="description_margin">10dp</dimen>
     <dimen name="follow_button_right_margin">5dp</dimen>
     <dimen name="followers_label_left_margin">5dp</dimen>
+    <dimen name="header_image_height">120dp</dimen>
+    <dimen name="profile_image_margin_start">10dp</dimen>
+    <dimen name="profile_image_margin_top">-25dp</dimen>
 
 </resources>
