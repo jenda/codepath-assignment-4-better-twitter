@@ -32,4 +32,12 @@
         android:layout_below="@+id/user_full_name"
         android:layout_marginTop="18dp"
         android:text="TextView" />
+
+    <FrameLayout
+        android:id="@+id/tweets_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_handle"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red"/>
 </RelativeLayout>
