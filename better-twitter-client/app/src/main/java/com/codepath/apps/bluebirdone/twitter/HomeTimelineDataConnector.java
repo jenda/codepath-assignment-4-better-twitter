@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 /**
  * Created by jan_spidlen on 10/6/17.
  */
-
+@Singleton
 public class HomeTimelineDataConnector extends DataConnector {
 
     @Inject

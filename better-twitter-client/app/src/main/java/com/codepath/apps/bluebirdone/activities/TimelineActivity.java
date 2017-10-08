@@ -23,6 +23,7 @@ import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 import com.codepath.apps.bluebirdone.fragments.UserProfileFragment;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
+import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.models.User;
 import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
 import com.codepath.apps.bluebirdone.twitter.CurrentUserMentionsDataConnector;
@@ -197,7 +198,13 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
 
     @OnClick(R.id.fab)
     protected void fabClicked() {
+        showPostTweetDialog(null);
+    }
+
+    public void showPostTweetDialog(Tweet replyTo) {
+
         final FragmentManager fm = getSupportFragmentManager();
+        postTweetDialog.setReplyToTweet(replyTo);
         if (postTweetDialog.currentUser != null) {
             postTweetDialog.show(fm, PostTweetDialog.class.getName());
             return;

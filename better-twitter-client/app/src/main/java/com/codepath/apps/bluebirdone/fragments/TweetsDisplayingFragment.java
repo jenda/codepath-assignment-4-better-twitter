@@ -181,6 +181,7 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
     public void onTweetPosted(Tweet tweet) {
         // TODO: Refactor.
 //        dbController.saveTweet(tweet);
+        Log.d("jenda", "onTweetPosted");
         tweets.add(0, tweet);
         tweetAdapter.notifyDataSetChanged();
 

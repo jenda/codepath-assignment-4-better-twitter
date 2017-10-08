@@ -1,6 +1,7 @@
 package com.codepath.apps.bluebirdone.twitter;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.util.Log;
 
@@ -77,8 +78,8 @@ public abstract class DataConnector {
         }
     }
 
-    public void postTweet(String tweet) {
-        twitterClient.postTweet(tweet, new JsonHttpResponseHandler() {
+    public void postTweet(String tweet, @Nullable Long inReplyToStatusId) {
+        twitterClient.postTweet(tweet, inReplyToStatusId, new JsonHttpResponseHandler() {
 
             public void onFailure(int statusCode, Header[] headers, Throwable throwable,
                                   JSONObject errorResponse) {

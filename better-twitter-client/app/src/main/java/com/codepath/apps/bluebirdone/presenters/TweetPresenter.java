@@ -141,4 +141,8 @@ public class TweetPresenter {
             activity.onDataLoadFinished();
         }
     };
+
+    public void onReplyClicked(Tweet tweet) {
+        activity.showPostTweetDialog(tweet);
+    }
 }

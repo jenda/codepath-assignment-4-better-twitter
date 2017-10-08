@@ -1,6 +1,7 @@
 package com.codepath.apps.bluebirdone;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
@@ -94,10 +95,16 @@ public class TwitterClient extends OAuthBaseClient {
         RequestHandle requestHandle = getClient().get(apiUrl, params, handler);
     }
 
-    public void postTweet(String body, AsyncHttpResponseHandler handler) {
+    public void postTweet(String body, @Nullable Long inReplyToStatusId,
+                          AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", body);
+
+        if (inReplyToStatusId != null) {
+            params.put("in_reply_to_status_id", inReplyToStatusId);
+        }
+
         getClient().post(apiUrl, params, handler);
     }
 

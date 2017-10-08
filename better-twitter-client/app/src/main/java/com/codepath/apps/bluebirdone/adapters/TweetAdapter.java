@@ -202,5 +202,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             Log.d("jenda", "fav");
             presenter.onFavClicked(tweet);
         }
+
+        @OnClick(R.id.reply_button)
+        protected void reply(){
+            Log.d("jenda", "reply");
+            presenter.onReplyClicked(tweet);
+        }
     }
 }

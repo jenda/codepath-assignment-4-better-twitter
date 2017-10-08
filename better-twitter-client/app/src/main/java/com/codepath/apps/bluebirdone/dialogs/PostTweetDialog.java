@@ -77,6 +77,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     SharedPreferences sharedPreferences;
 
     public CurrentUser currentUser;
+    private Tweet replyToTweet;
 
     @Inject
     public PostTweetDialog() {
@@ -133,6 +134,8 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
         Log.d("jenda", "savedTweet: " + savedTweet);
         if (savedTweet != null) {
             tweetTextEditText.setText(savedTweet);
+        } else if (replyToTweet != null) {
+            tweetTextEditText.setText(replyToTweet.user.getHandle());
         }
         sharedPreferences.edit().clear().commit();
     }
@@ -177,7 +180,7 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     @OnClick(R.id.post_tweet_button)
     protected void postTweet() {
         String tweet = tweetTextEditText.getText().toString();
-        dataConnector.postTweet(tweet);
+        dataConnector.postTweet(tweet, replyToTweet != null ? replyToTweet.id : null);
     }
 
     @OnClick(R.id.close_dialog)
@@ -226,5 +229,9 @@ public class PostTweetDialog extends BaseBlueBirdOneDialog implements DataConnec
     @Override
     public void onTimeLineFetched(int page, List<Tweet> tweets) {
 
+    }
+
+    public void setReplyToTweet(Tweet replyToTweet) {
+        this.replyToTweet = replyToTweet;
     }
 }
