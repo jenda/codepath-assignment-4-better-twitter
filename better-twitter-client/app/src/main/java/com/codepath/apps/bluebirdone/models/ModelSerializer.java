@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import static com.codepath.apps.bluebirdone.models.CurrentUser.parseUser;
+
 /**
  * Created by jan_spidlen on 9/29/17.
  */
@@ -42,7 +44,11 @@ public class ModelSerializer {
     }
 
     public CurrentUser currentUserFromJson(JSONObject jsonObject) {
-        return CurrentUser.parseUser(jsonObject, gson);
+        return parseUser(jsonObject, gson);
+    }
+
+    public User userFromJson(JSONObject jsonObject) {
+        return User.parseUser(jsonObject, gson);
     }
 
     public ErrorResponse errorResponseFromJson(JSONObject json) {

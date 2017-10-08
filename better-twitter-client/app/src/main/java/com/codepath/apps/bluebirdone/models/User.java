@@ -35,15 +35,18 @@ public class User extends BaseModel {
     public String screenName;
 
 //    @Column
-//    @SerializedName("id_str")
-//    public String stringId;
+    @SerializedName("id_str")
+    public String stringId;
 
     @Column
     @SerializedName("profile_image_url")
     public String profileImageUrl;
 
-    public static User parseUser(JSONObject jsonObject) throws JSONException {
-        Gson gson = new GsonBuilder().create();
+//    @Column
+    @SerializedName("profile_banner_url")
+    public String profileBackgroundImageUrl;
+
+    public static User parseUser(JSONObject jsonObject, Gson gson) {
         return gson.fromJson(jsonObject.toString(), User.class);
     }
 

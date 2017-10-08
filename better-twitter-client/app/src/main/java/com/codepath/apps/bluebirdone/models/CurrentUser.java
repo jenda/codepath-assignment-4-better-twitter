@@ -11,6 +11,7 @@ import org.json.JSONObject;
  * Created by jan_spidlen on 9/29/17.
  */
 
+@Deprecated
 public class CurrentUser {
 
     @SerializedName("name")

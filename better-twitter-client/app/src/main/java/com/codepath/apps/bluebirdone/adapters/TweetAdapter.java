@@ -2,6 +2,7 @@ package com.codepath.apps.bluebirdone.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.models.User;
+import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
 import com.codepath.apps.bluebirdone.utils.Utils;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by jan_spidlen on 9/28/17.
@@ -26,9 +33,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     private final List<Tweet> tweets;
     private final Context context;
 
-    public TweetAdapter(List<Tweet> tweets, Context context) {
+    private final TweetPresenter presenter;
+    public TweetAdapter(List<Tweet> tweets, Context context, TweetPresenter presenter) {
         this.tweets = tweets;
         this.context = context;
+        this.presenter = presenter;
     }
 
     @Override
@@ -37,10 +46,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View bookView = inflater.inflate(R.layout.tweet_item, parent, false);
+        View tweetView = inflater.inflate(R.layout.tweet_item, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(bookView);
+        ViewHolder viewHolder = new ViewHolder(tweetView);
         return viewHolder;
     }
 
@@ -69,6 +78,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
                 .into(holder.profileImageView);
+
+        holder.tweet = tweet;
     }
 
     @Override
@@ -115,9 +126,19 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         @BindView(R.id.favsCount)
         TextView favsCountTextView;
 
+        public Tweet tweet;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @Optional
+        @OnClick({R.id.profile_image_view, R.id.user_name_text_view, R.id.handle_text_view})
+        protected void onUserClicked() {
+            Log.d("jenda", "onUserClicked");
+
+            presenter.onUserClicked(tweet.user);
         }
     }
 }

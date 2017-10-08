@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.apps.bluebirdone.R;
+import com.codepath.apps.bluebirdone.activities.TimelineActivity;
 import com.codepath.apps.bluebirdone.adapters.TweetAdapter;
 import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
@@ -137,7 +138,7 @@ public class TweetsDisplayingFragment extends BaseFragment  implements DataConne
 
 
         tweetsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        tweetAdapter = new TweetAdapter(tweets, this.getActivity());
+        tweetAdapter = new TweetAdapter(tweets, this.getActivity(), ((TimelineActivity)this.getActivity()).presenter);
         tweetsRecyclerView.setAdapter(tweetAdapter);
 
 

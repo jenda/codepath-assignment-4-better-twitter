@@ -21,6 +21,8 @@ import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 import com.codepath.apps.bluebirdone.fragments.CurrentUserProfileFragment;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
+import com.codepath.apps.bluebirdone.models.User;
+import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -54,6 +56,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
     @Inject
     DbController dbController;
 
+    @Inject
+    public TweetPresenter presenter;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.tab_layout)
@@ -70,6 +75,8 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         getAppComponent().inject(this);
         viewPager.setAdapter(new BlueBirdOnePagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
+
+        presenter.attachActivity(this);
     }
 
     @Override
@@ -106,22 +113,28 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
                 Log.d("DEBUG", "timeline: " + jsonObject.toString());
                 // Load json array into model classes
 
-                CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
-                currentUserProfileFragment.currentUser = modelSerializer.currentUserFromJson(jsonObject);
-                final FragmentManager fragmentManager = getSupportFragmentManager();
-
-
-                currentUserProfileFragment.show(fragmentManager, CurrentUserProfileFragment.class.getName());
-//                fragmentManager
-//                        .beginTransaction()
-//                        .add(R.id.fragmentContainerLayout, currentUserProfileFragment)
-//                        .commit();
+                showUserProfileFragment(modelSerializer.userFromJson(jsonObject));
+//                CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
+//                currentUserProfileFragment.currentUser = modelSerializer.currentUserFromJson(jsonObject);
+//                final FragmentManager fragmentManager = getSupportFragmentManager();
+//
+//
+//                currentUserProfileFragment.show(fragmentManager, CurrentUserProfileFragment.class.getName());
             }
 
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 throwable.printStackTrace();
             }
         });
+    }
+
+    public void showUserProfileFragment(User user) {
+        CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
+        currentUserProfileFragment.currentUser = user;
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+        currentUserProfileFragment.show(fragmentManager, CurrentUserProfileFragment.class.getName());
     }
 
     //////////////////////////

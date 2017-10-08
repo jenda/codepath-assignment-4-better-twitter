@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.dialogs.BaseBlueBirdOneDialog;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
+import com.codepath.apps.bluebirdone.models.User;
 
 import javax.inject.Inject;
 
@@ -29,7 +30,7 @@ import static com.codepath.apps.bluebirdone.fragments.TweetsDisplayingFragment.n
 
 public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
 
-    public CurrentUser currentUser;
+    public User currentUser;
 
     @BindView(R.id.header_photo)
     ImageView headerPhotoImageView;
