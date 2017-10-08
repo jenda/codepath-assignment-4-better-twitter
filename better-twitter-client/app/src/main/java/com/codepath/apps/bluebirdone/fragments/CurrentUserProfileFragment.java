@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.dialogs.BaseBlueBirdOneDialog;
 import com.codepath.apps.bluebirdone.models.User;
@@ -76,13 +77,13 @@ public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
         userHandleTextView.setText(currentUser.getHandle());
 
         followers.setText(currentUser.followersCount + " followers");
-        following.setText(currentUser.friendsCount + " followers");
+        following.setText(currentUser.friendsCount + " following");
         userDescription.setText(currentUser.description);
 
 
         Glide.with(this)
                 .load(currentUser.profileImageUrl)
-//                .bitmapTransform(new BlurTransformation(context))
+                .apply(RequestOptions.circleCropTransform())
                 .into(profileImage);
 
         Log.d("jenda", "user id" + currentUser.id);

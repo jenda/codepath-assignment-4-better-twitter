@@ -9,7 +9,7 @@
     <dimen name="user_name_text_size">15sp</dimen>
     <dimen name="handle_text_size">12sp</dimen>
     <dimen name="time_ago_text_size">10sp</dimen>
-    <dimen name="profile_image_width">50dp</dimen>
+    <dimen name="profile_image">50dp</dimen>
     <dimen name="profile_image_margin">5dp</dimen>
     <dimen name="divider_height">2dp</dimen>
     <dimen name="tweet_text_margin_bottom">10dp</dimen>

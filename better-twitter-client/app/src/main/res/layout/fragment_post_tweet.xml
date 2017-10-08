@@ -47,8 +47,8 @@
 
         <ImageView
             android:id="@+id/user_profile_image"
-            android:layout_width="@dimen/profile_image_width"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/profile_image"
+            android:layout_height="@dimen/profile_image"
             tools:src="@drawable/ic_launcher"
             android:layout_margin="@dimen/post_tweet_name_padding"
             android:layout_alignParentRight="true"/>

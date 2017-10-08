@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.models.Tweet;
 import com.codepath.apps.bluebirdone.models.User;
@@ -77,6 +78,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
+                .apply(RequestOptions.circleCropTransform())
                 .into(holder.profileImageView);
 
         holder.tweet = tweet;
