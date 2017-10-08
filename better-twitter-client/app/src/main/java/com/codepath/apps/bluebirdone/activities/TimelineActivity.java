@@ -27,6 +27,7 @@ import com.codepath.apps.bluebirdone.twitter.CurrentUserMentionsDataConnector;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
 import com.codepath.apps.bluebirdone.twitter.UserTimelineDataConnector;
+import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
@@ -72,6 +73,9 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
+//    @BindView(R.id.materialViewPager)
+//    MaterialViewPager materialViewPager;
+
     ProgressDialog progressDialog;
 
     private void prepareProgressDialog() {
@@ -91,6 +95,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         getAppComponent().inject(this);
         viewPager.setAdapter(new BlueBirdOnePagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setupWithViewPager(viewPager);
+//        materialViewPager.getPagerTitleStrip().setViewPager(viewPager);
 
         presenter.attachActivity(this);
 

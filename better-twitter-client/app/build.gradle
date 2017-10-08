@@ -74,6 +74,11 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     apply plugin: 'com.android.application'
 
+    compile 'com.github.florent37:materialviewpager:1.2.3'
+    //dependencies
+    compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
+
 
     apply plugin: 'me.tatarka.retrolambda' // make sure to apply last!
 

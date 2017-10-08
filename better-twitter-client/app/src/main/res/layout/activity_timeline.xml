@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,13 +24,6 @@
             app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|enterAlways" />
 
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical">
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
@@ -38,14 +32,48 @@
             app:tabIndicatorColor="@color/background_blue"
             app:tabTextColor="@color/background_blue"
             app:tabSelectedTextColor="@color/verified_blue"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:tabMode="fixed" />
+    </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+
+
+    <!--<com.github.florent37.materialviewpager.MaterialViewPager-->
+        <!--android:id="@+id/materialViewPager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:background="@color/red"-->
+        <!--app:viewpager_color="@color/accent_color"-->
+        <!--app:viewpager_headerHeight="20dp"-->
+        <!--app:viewpager_hideLogoWithFade="false"-->
+        <!--app:viewpager_enableToolbarElevation="true"-->
+        <!--app:viewpager_parallaxHeaderFactor="1.5"-->
+        <!--app:viewpager_headerAdditionalHeight="20dp"-->
+        <!--app:viewpager_displayToolbarWhenSwipe="false"-->
+        <!--app:viewpager_transparentToolbar="false"-->
+        <!--app:viewpager_animatedHeaderImage="true"-->
+        <!--app:viewpager_disableToolbar="false"-->
+
+        <!--/>-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="?attr/actionBarSize"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/view_pager"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1" />-->
+    <!--</LinearLayout>-->
 
     <!--<include layout="@layout/content_timeline" />-->
 
