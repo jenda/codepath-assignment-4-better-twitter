@@ -3,7 +3,9 @@ package com.codepath.apps.bluebirdone.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -27,6 +29,7 @@ import com.codepath.apps.bluebirdone.twitter.CurrentUserMentionsDataConnector;
 import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.codepath.apps.bluebirdone.twitter.HomeTimelineDataConnector;
 import com.codepath.apps.bluebirdone.twitter.UserTimelineDataConnector;
+import com.codepath.apps.bluebirdone.utils.Utils;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -103,6 +106,23 @@ public class TimelineActivity extends BaseBlueBirdOneActivity implements DataCon
         userTimelineDataConnector.addLoaderListener(this);
         homeTimelineDataConnector.addLoaderListener(this);
         currentUserMentionsDataConnector.addLoaderListener(this);
+
+        if (!Utils.isNetworkAvailable(this)) {
+            showError(R.string.network_not_available);
+        }
+    }
+
+    void showError(@StringRes int messageRes) {
+        final Snackbar snackbar = Snackbar.make(outerLayout,
+                this.getApplicationContext().getText(messageRes),
+                Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
     }
 
     @Override
