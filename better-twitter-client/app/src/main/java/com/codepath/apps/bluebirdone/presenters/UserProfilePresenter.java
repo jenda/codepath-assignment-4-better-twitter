@@ -31,7 +31,6 @@ public class UserProfilePresenter {
     public UserProfilePresenter() {}
 
     public void followOrUnfollowUser(User user) {
-
         Log.d("jenda", "followed button clicked");
         final JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
 

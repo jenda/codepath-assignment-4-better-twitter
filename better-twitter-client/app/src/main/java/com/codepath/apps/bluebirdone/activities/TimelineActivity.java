@@ -16,7 +16,6 @@ import android.view.Window;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.BlueBirdOnePagerAdapter;
 import com.codepath.apps.bluebirdone.TwitterClient;
-import com.codepath.apps.bluebirdone.data.DbController;
 import com.codepath.apps.bluebirdone.dialogs.PostTweetDialog;
 import com.codepath.apps.bluebirdone.fragments.CurrentUserProfileFragment;
 import com.codepath.apps.bluebirdone.models.CurrentUser;
@@ -51,10 +50,6 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 
     @Inject
     PostTweetDialog postTweetDialog;
-//    @Inject
-//    DataConnector dataConnector;
-    @Inject
-    DbController dbController;
 
     @Inject
     public TweetPresenter presenter;

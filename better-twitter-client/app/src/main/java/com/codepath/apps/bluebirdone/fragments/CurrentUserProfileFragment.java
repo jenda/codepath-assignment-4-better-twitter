@@ -33,9 +33,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cz.msebera.android.httpclient.Header;
-
-import static com.codepath.apps.bluebirdone.fragments.TweetsDisplayingFragment.newInstance;
 
 /**
  * Created by jan_spidlen on 10/6/17.
