@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.dialogs.BaseBlueBirdOneDialog;
 import com.codepath.apps.bluebirdone.models.User;
+import com.codepath.apps.bluebirdone.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -80,8 +81,8 @@ public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
         userFullNameTextView.setText(currentUser.name);
         userHandleTextView.setText(currentUser.getHandle());
 
-        followers.setText(currentUser.followersCount + " followers");
-        following.setText(currentUser.friendsCount + " following");
+        followers.setText(Utils.formatLargeNumber(currentUser.followersCount));
+        following.setText(Utils.formatLargeNumber(currentUser.friendsCount));
         userDescription.setText(currentUser.description);
 
 

@@ -63,18 +63,38 @@
         android:id="@+id/following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/following_label"
+        android:layout_alignBottom="@+id/following_label"
+        android:layout_alignStart="@+id/user_description"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
+        tools:text="1234" />
+
+    <TextView
+        android:id="@+id/following_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/following"
         android:layout_below="@+id/user_description"
-        android:layout_alignStart="@+id/user_full_name"
-        tools:text="1234 Following"/>
+        android:text="@string/following"/>
 
     <TextView
         android:id="@+id/followers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/followers_label"
+        android:layout_alignBottom="@+id/followers_label"
+        android:layout_toEndOf="@+id/user_full_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
+        tools:text="1234" />
+    <TextView
+        android:id="@+id/followers_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/user_description"
-        android:layout_toEndOf="@+id/following"
-        android:layout_marginStart="30dp"
-        tools:text="1234 Followers" />
+        android:layout_toEndOf="@+id/followers"
+        android:text="@string/followers" />
 
 
     <Button
@@ -86,6 +106,8 @@
         android:text="@string/follow"
         android:background="@color/verified_blue"
         android:textColor="@color/white"
+        android:padding="@dimen/post_tweet_name_padding"
+        android:layout_marginEnd="@dimen/follow_button_right_margin"
         tools:src="@mipmap/ic_launcher" />
 
     <FrameLayout

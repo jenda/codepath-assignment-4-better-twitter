@@ -4,6 +4,7 @@ import android.text.format.DateUtils;
 
 import com.codepath.apps.bluebirdone.models.Tweet;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -11,6 +12,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by jan_spidlen on 9/29/17.
@@ -35,6 +38,26 @@ public class Utils {
         }
 
         return relativeDate;
+    }
+
+    public static String formatLargeNumber(long number) {
+        final int K = 1000;
+        final int M = 1000000;
+        if (number < K) {
+            return "" + number;
+        }
+        double relativeNum = number;
+        String suffix = "";
+        if (number >= M) {
+            relativeNum = relativeNum/M;
+            suffix = "M";
+        } else if (number >= K) {
+            relativeNum = relativeNum/K;
+            suffix = "K";
+        }
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        return String.format("%s %s", df.format(relativeNum), suffix);
     }
 
     public static void sortTweets(List<Tweet> tweets) {
