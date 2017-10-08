@@ -16,5 +16,8 @@
     <dimen name="post_tweet_button_margin">20dp</dimen>
     <dimen name="post_tweet_outer_layout_margin">10dp</dimen>
     <dimen name="post_tweet_name_padding">5dp</dimen>
+    <dimen name="name_text_size">25sp</dimen>
+    <dimen name="profile_divider_height">10dp</dimen>
+    <dimen name="description_margin">5dp</dimen>
 
 </resources>

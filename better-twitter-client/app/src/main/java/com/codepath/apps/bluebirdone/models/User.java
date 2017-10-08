@@ -46,6 +46,15 @@ public class User extends BaseModel {
     @SerializedName("profile_banner_url")
     public String profileBackgroundImageUrl;
 
+    @SerializedName("followers_count")
+    public Long followersCount;
+
+    @SerializedName("friends_count")
+    public Long friendsCount;
+
+    @SerializedName("description")
+    public String description;
+
     public static User parseUser(JSONObject jsonObject, Gson gson) {
         return gson.fromJson(jsonObject.toString(), User.class);
     }

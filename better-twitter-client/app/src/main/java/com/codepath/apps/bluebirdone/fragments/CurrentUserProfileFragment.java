@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.bluebirdone.R;
 import com.codepath.apps.bluebirdone.dialogs.BaseBlueBirdOneDialog;
-import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.User;
 
 import javax.inject.Inject;
@@ -34,10 +33,24 @@ public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
 
     @BindView(R.id.header_photo)
     ImageView headerPhotoImageView;
+
+    @BindView(R.id.profile_image_view)
+    ImageView profileImage;
+
     @BindView(R.id.user_full_name)
     TextView userFullNameTextView;
+
     @BindView(R.id.user_handle)
     TextView userHandleTextView;
+
+    @BindView(R.id.user_description)
+    TextView userDescription;
+
+    @BindView(R.id.following)
+    TextView following;
+
+    @BindView(R.id.followers)
+    TextView followers;
 
     @BindView(R.id.tweets_container)
     FrameLayout frameLayout;
@@ -61,6 +74,16 @@ public class CurrentUserProfileFragment extends BaseBlueBirdOneDialog {
 
         userFullNameTextView.setText(currentUser.name);
         userHandleTextView.setText(currentUser.getHandle());
+
+        followers.setText(currentUser.followersCount + " followers");
+        following.setText(currentUser.friendsCount + " followers");
+        userDescription.setText(currentUser.description);
+
+
+        Glide.with(this)
+                .load(currentUser.profileImageUrl)
+//                .bitmapTransform(new BlurTransformation(context))
+                .into(profileImage);
 
         Log.d("jenda", "user id" + currentUser.id);
         return view;
