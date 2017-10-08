@@ -23,9 +23,9 @@ import com.codepath.apps.bluebirdone.models.CurrentUser;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.User;
 import com.codepath.apps.bluebirdone.presenters.TweetPresenter;
-import com.codepath.apps.bluebirdone.twitter.DataConnector;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
@@ -110,19 +110,19 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
         twitterClient.getCurrentUser(new JsonHttpResponseHandler() {
 
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
-                Log.d("DEBUG", "timeline: " + jsonObject.toString());
+                Log.d("jenda", "timeline: " + jsonObject.toString());
+                try {
+                    Log.d("jenda", "following: " + jsonObject.get("following"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 // Load json array into model classes
 
                 showUserProfileFragment(modelSerializer.userFromJson(jsonObject));
-//                CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
-//                currentUserProfileFragment.currentUser = modelSerializer.currentUserFromJson(jsonObject);
-//                final FragmentManager fragmentManager = getSupportFragmentManager();
-//
-//
-//                currentUserProfileFragment.show(fragmentManager, CurrentUserProfileFragment.class.getName());
             }
 
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode,
+                                  Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 throwable.printStackTrace();
             }
         });
@@ -130,7 +130,7 @@ public class TimelineActivity extends BaseBlueBirdOneActivity {
 
     public void showUserProfileFragment(User user) {
         CurrentUserProfileFragment currentUserProfileFragment = new CurrentUserProfileFragment();
-        currentUserProfileFragment.currentUser = user;
+        currentUserProfileFragment.user = user;
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
 

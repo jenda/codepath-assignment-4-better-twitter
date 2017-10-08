@@ -9,4 +9,5 @@
     <color name="off_white">#fefbf7</color>
     <color name="transparent">#00000000</color>
     <color name="red">#ff0000</color>
+    <color name="negative_red">#e76262</color>
 </resources>

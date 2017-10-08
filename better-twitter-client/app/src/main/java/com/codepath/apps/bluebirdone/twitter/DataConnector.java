@@ -9,6 +9,7 @@ import com.codepath.apps.bluebirdone.TwitterClient;
 import com.codepath.apps.bluebirdone.models.ErrorResponse;
 import com.codepath.apps.bluebirdone.models.ModelSerializer;
 import com.codepath.apps.bluebirdone.models.Tweet;
+import com.codepath.apps.bluebirdone.models.User;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -41,6 +42,7 @@ public abstract class DataConnector {
         void onFailure(@StringRes int messageRes);
         void onTimeLineFetched(int page, List<Tweet> tweets);
     }
+
 
     @Inject
     TwitterClient twitterClient;

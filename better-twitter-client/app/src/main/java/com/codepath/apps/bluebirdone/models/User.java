@@ -55,6 +55,9 @@ public class User extends BaseModel {
     @SerializedName("description")
     public String description;
 
+    @SerializedName("following")
+    public boolean following;
+
     public static User parseUser(JSONObject jsonObject, Gson gson) {
         return gson.fromJson(jsonObject.toString(), User.class);
     }
