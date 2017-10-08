@@ -1,5 +1,7 @@
 package com.codepath.apps.bluebirdone.models;
 
+import android.util.Log;
+
 import com.codepath.apps.bluebirdone.MyDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -68,6 +70,9 @@ public class Tweet extends BaseModel {
     @SerializedName("in_reply_to_status_id")
     public Long inReplyToStatusId;
 
+    @SerializedName("retweeted_status")
+    public Object retweetedStatus;
+
     public Tweet() {}
 
 
@@ -89,8 +94,10 @@ public class Tweet extends BaseModel {
     }
 
     public void updateFrom(Tweet t) {
+        Log.d("jenda", "update " + t.id);
         this.favorited = t.favorited;
         this.retweeted = t.retweeted;
+        this.retweetedStatus = t.retweetedStatus;
         this.user = t.user;
     }
 }

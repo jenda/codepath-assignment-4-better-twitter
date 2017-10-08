@@ -34,6 +34,7 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 import static android.R.attr.handle;
+import static android.R.id.list;
 
 /**
  * Created by jan_spidlen on 9/28/17.
@@ -123,6 +124,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     public void clear() {
         tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addFirst(Tweet t) {
+        tweets.add(0, t);
         notifyDataSetChanged();
     }
 

@@ -73,16 +73,20 @@ public class TweetPresenter {
         });
     }
 
-    public void onRetweetClicked(Tweet tweet) {
-        twitterClient.retweet(tweet.id, new JsonHttpResponseHandler() {
+    public void onRetweetClicked(final Tweet tweet) {
+
+        JsonHttpResponseHandler retweetHandler = new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 try {
                     Log.d("jenda", "jsonObject: " + jsonObject);
-                    Tweet tweet = modelSerializer.tweetFromJson(jsonObject);
+                    Tweet newTweet = modelSerializer.tweetFromJson(jsonObject);
+                    Log.d("jenda", "tweet.retweetedStatus " + tweet.retweetedStatus);
+
+//                    tweetAdapter.addFirst(newTweet);
+                    tweet.retweeted = newTweet.retweetedStatus != null;
                     tweetAdapter.updateOrInsertTweet(tweet);
-//                    tweet
                 } finally {
                     activity.onDataLoadFinished();
                 }
@@ -93,16 +97,21 @@ public class TweetPresenter {
                 throwable.printStackTrace();
                 activity.onDataLoadFinished();
             }
-        });
+        };
+        if (!tweet.retweeted) {
+            twitterClient.retweet(tweet.id, retweetHandler);
+        } else {
+            twitterClient.unretweet(tweet.id, retweetHandler);
+        }
 
     }
 
     public void onFavClicked(Tweet tweet) {
         Log.d("jenda", "faving " + tweet.id);
         if (tweet.favorited) {
-            twitterClient.unfav(tweet.id, handler);
+            twitterClient.unfav(tweet.id, favHandler);
         } else {
-            twitterClient.fav(tweet.id, handler);
+            twitterClient.fav(tweet.id, favHandler);
         }
     }
 
@@ -110,13 +119,16 @@ public class TweetPresenter {
         this.tweetAdapter = tweetAdapter;
     }
 
-    JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+    JsonHttpResponseHandler favHandler = new JsonHttpResponseHandler() {
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
             try {
                 Log.d("jenda", "jsonObject: " + jsonObject);
                 Tweet tweet = modelSerializer.tweetFromJson(jsonObject);
+                Log.d("jenda", "tweet.retweetedStatus " + tweet.retweetedStatus);
+                tweet.retweeted = tweet.retweetedStatus != null;
+                Log.d("jenda", "tweet.retweeted " + tweet.retweeted);
                 tweetAdapter.updateOrInsertTweet(tweet);
             } finally {
                 activity.onDataLoadFinished();

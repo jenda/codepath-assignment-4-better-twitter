@@ -1,6 +1,7 @@
 package com.codepath.apps.bluebirdone;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
@@ -135,9 +136,15 @@ public class TwitterClient extends OAuthBaseClient {
     }
 
     public void retweet(Long tweetId, AsyncHttpResponseHandler handler) {
+        Log.d("jenda", "url " + String.format("statuses/retweet/%s.json", tweetId));
         String apiUrl = getApiUrl(String.format("statuses/retweet/%s.json", tweetId));
         RequestParams params = new RequestParams();
-        getClient().get(apiUrl, params, handler);
+        getClient().post(apiUrl, params, handler);
+    }
+    public void unretweet(Long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl(String.format("statuses/unretweet/%s.json", tweetId));
+        RequestParams params = new RequestParams();
+        getClient().post(apiUrl, params, handler);
     }
 
     public void fav(Long tweetId, AsyncHttpResponseHandler handler) {
